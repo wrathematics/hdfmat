@@ -1,0 +1,18 @@
+Package: hdfmat
+Type: Package
+Title: HDF5 Matrix Operations
+Version: 0.1-0
+Description: Some out-of-core matrix operations via HDF5.
+License: BSD 2-clause License + file LICENSE
+Depends:
+    R (>= 3.6.0)
+Imports:
+    R6 (>= 2.5.0)
+ByteCompile: yes
+URL: https://github.com/wrathematics/hdfmat
+BugReports: https://github.com/wrathematics/hdfmat/issues
+Authors@R: c(
+    person("Drew", "Schmidt", role=c("aut", "cre"), email="wrathematics@gmail.com")
+    )
+Maintainer: Drew Schmidt <wrathematics@gmail.com>
+RoxygenNote: 7.1.1
