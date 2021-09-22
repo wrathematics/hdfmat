@@ -1,0 +1,56 @@
+#include <cstdlib>
+
+#include "hdfmat.h"
+#include "extptr.h"
+
+
+extern "C" SEXP R_hdfmat_fill(SEXP ds, SEXP x)
+{
+  // H5::Exception::dontPrint();
+  H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
+  
+  dataset->write(REAL(x), H5::PredType::IEEE_F64LE);
+  
+  return R_NilValue;
+}
+
+
+
+
+
+template <typename T>
+static inline void read(const hsize_t m, const hsize_t n, T *x,
+  H5::DataSet *dataset, H5::PredType h5type)
+{
+  hsize_t slice[2];
+  slice[0] = m;
+  slice[1] = n;
+  
+  H5::DataSpace mem_space(2, slice, NULL);
+  H5::DataSpace data_space = dataset->getSpace();
+  
+  hsize_t offset[2];
+  offset[1] = 0;
+  offset[0] = 0;
+  
+  data_space.selectHyperslab(H5S_SELECT_SET, slice, offset);
+  
+  dataset->read(x, h5type, mem_space, data_space);
+}
+
+extern "C" SEXP R_hdfmat_read(SEXP m_, SEXP n_, SEXP ds)
+{
+  // H5::Exception::dontPrint();
+  H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
+  
+  const hsize_t m = (hsize_t) REAL(m_)[0];
+  const hsize_t n = (hsize_t) REAL(n_)[0];
+  
+  SEXP ret;
+  PROTECT(ret = allocMatrix(REALSXP, n, m));
+  
+  read(m, n, REAL(ret), dataset, H5::PredType::IEEE_F64LE);
+  
+  UNPROTECT(1);
+  return ret;
+}
