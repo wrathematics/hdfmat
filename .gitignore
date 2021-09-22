@@ -1,0 +1,6 @@
+*~
+*.swp
+
+src/*.o
+src/*.so
+src/Makevars
