@@ -15,8 +15,9 @@ Note that I/O will be the main bottleneck since this is out of core. You could d
 The package depends on the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html) and links with the [fmlr package](https://hpcran.org/packages/fmlr/index.html):
 
 ```r
-install.packages("R6")
-install.packages("fmlr", repos="https://hpcran.org")
+repos = c("https://hpcran.org", "https://cran.rstudio.com")
+install.packages("R6", repos=repos)
+install.packages("fmlr", repos=repos)
 ```
 
 The development version of the package is maintained on GitHub:
