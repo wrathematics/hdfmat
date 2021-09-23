@@ -1,4 +1,4 @@
-#' cpumat class
+#' hdfmat class
 #' 
 #' Storage and methods for CPU matrix data.
 #' 
@@ -13,8 +13,8 @@
 #' @useDynLib hdfmat R_hdfmat_scale
 #' @useDynLib hdfmat R_hdfmat_set_diag
 #' 
-#' @rdname cpumat-class
-#' @name cpumat-class
+#' @rdname hdfmat-class
+#' @name hdfmat-class
 hdfmatR6 = R6::R6Class("cpumat",
   public = list(
     #' @details
