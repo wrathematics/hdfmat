@@ -37,6 +37,15 @@ hdfmatR6 = R6::R6Class("cpumat",
     
     
     
+    print = function()
+    {
+      cat(paste0("## A ",
+        private$nrows, "x", private$ncols, " hdfmat object ", 
+        private$file, "\n"))
+    },
+    
+    
+    
     fill = function(x)
     {
       x = t(x)
