@@ -1,10 +1,11 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <fml/src/fml/cpu/linalg/blas.hh>
+
 #include "hdfmat.h"
 #include "extptr.h"
 
-#include "fml/blas.hh"
 
 
 template <typename T>

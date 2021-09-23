@@ -8,6 +8,8 @@ Depends:
     R (>= 3.6.0)
 Imports:
     R6 (>= 2.5.0)
+LinkingTo:
+    fmlr (>= 0.3-0)
 ByteCompile: yes
 URL: https://github.com/wrathematics/hdfmat
 BugReports: https://github.com/wrathematics/hdfmat/issues

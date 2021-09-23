@@ -12,15 +12,20 @@ Note that I/O will be the main bottleneck since this is out of core. You could d
 
 ## Installation
 
-The development version is maintained on GitHub:
+The package depends on the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html) and links with the [fmlr package](https://hpcran.org/packages/fmlr/index.html):
+
+```r
+install.packages("R6")
+install.packages("fmlr", repos="https://hpcran.org")
+```
+
+The development version of the package is maintained on GitHub:
 
 ```r
 remotes::install_github("wrathematics/hdfmat")
 ```
 
-You will need a system installation of HDF5 to build the package. The package depends on the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html), but has no other dependencies.
-
-The package probably does not build on Windows at the moment. If you know how to set `src/Makevars.win` to link against HDF5, please let me know.
+You will need a system installation of HDF5 to build the package. The package probably does not build on Windows at the moment. If you know how to set `src/Makevars.win` to link against HDF5, please let me know.
 
 
 ## Package Use
