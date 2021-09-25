@@ -192,7 +192,7 @@ extern "C" SEXP R_hdfmat_eigen_sym(SEXP k_, SEXP n_, SEXP ds, SEXP type)
   else // if (INT(type) == TYPE_FLOAT)
   {
     PROTECT(values = allocVector(INTSXP, k));
-    eigen_sym(n, k, FLOAT(values), dataset, H5::PredType::IEEE_F64LE);
+    eigen_sym(n, k, FLOAT(values), dataset, H5::PredType::IEEE_F32LE);
   }
   
   UNPROTECT(1);
