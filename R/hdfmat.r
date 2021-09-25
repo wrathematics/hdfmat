@@ -6,6 +6,7 @@
 #' Data is held in an external pointer.
 #' 
 #' @useDynLib hdfmat R_hdfmat_cp
+#' @useDynLib hdfmat R_hdfmat_eigen_sym
 #' @useDynLib hdfmat R_hdfmat_fill
 #' @useDynLib hdfmat R_hdfmat_init
 #' @useDynLib hdfmat R_hdfmat_open
@@ -87,6 +88,18 @@ hdfmatR6 = R6::R6Class("cpumat",
       storage.mode(x) = "double"
       .Call(R_hdfmat_cp, x, private$ds)
       invisible(self)
+    },
+    
+    
+    
+    eigen = function(k=3)
+    {
+      if (private$nrows != private$ncols)
+        stop("matrix is non-square")
+      
+      k = as.integer(k)
+      n = as.double(private$nrows)
+      .Call(R_hdfmat_eigen_sym, k, n, private$ds)
     }
   ),
   

@@ -3,6 +3,7 @@
 export(crossprod_ooc)
 export(hdfmat)
 useDynLib(hdfmat,R_hdfmat_cp)
+useDynLib(hdfmat,R_hdfmat_eigen_sym)
 useDynLib(hdfmat,R_hdfmat_fill)
 useDynLib(hdfmat,R_hdfmat_init)
 useDynLib(hdfmat,R_hdfmat_open)
