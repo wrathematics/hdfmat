@@ -1,15 +1,22 @@
 #include <cstdlib>
 
+#include <float/float32.h>
+
 #include "hdfmat.h"
 #include "extptr.h"
 
+#include "types.h"
 
-extern "C" SEXP R_hdfmat_fill(SEXP ds, SEXP x)
+
+extern "C" SEXP R_hdfmat_fill(SEXP ds, SEXP x, SEXP type)
 {
   // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
-  dataset->write(REAL(x), H5::PredType::IEEE_F64LE);
+  if (INT(type) == TYPE_DOUBLE)
+    dataset->write(REAL(x), H5::PredType::IEEE_F64LE);
+  else // if (INT(TYPE) == TYPE_FLOAT)
+    dataset->write(FLOAT(x), H5::PredType::IEEE_F32LE);
   
   return R_NilValue;
 }
@@ -38,18 +45,26 @@ static inline void read(const hsize_t m, const hsize_t n, T *x,
   dataset->read(x, h5type, mem_space, data_space);
 }
 
-extern "C" SEXP R_hdfmat_read(SEXP m_, SEXP n_, SEXP ds)
+extern "C" SEXP R_hdfmat_read(SEXP m_, SEXP n_, SEXP ds, SEXP type)
 {
+  SEXP ret;
+  
   // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const hsize_t m = (hsize_t) REAL(m_)[0];
   const hsize_t n = (hsize_t) REAL(n_)[0];
   
-  SEXP ret;
-  PROTECT(ret = allocMatrix(REALSXP, n, m));
-  
-  read(m, n, REAL(ret), dataset, H5::PredType::IEEE_F64LE);
+  if (INT(type) == TYPE_DOUBLE)
+  {
+    PROTECT(ret = allocMatrix(REALSXP, n, m));
+    read(m, n, REAL(ret), dataset, H5::PredType::IEEE_F64LE);
+  }
+  else // if (INT(type) == TYPE_FLOAT)
+  {
+    PROTECT(ret = allocMatrix(INTSXP, n, m));
+    read(m, n, FLOAT(ret), dataset, H5::PredType::IEEE_F32LE);
+  }
   
   UNPROTECT(1);
   return ret;

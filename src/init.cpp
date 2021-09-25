@@ -2,6 +2,7 @@
 
 #include "hdfmat.h"
 #include "extptr.h"
+#include "types.h"
 
 
 extern "C" SEXP R_hdfmat_open(SEXP filename)
@@ -25,15 +26,22 @@ extern "C" SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP t
   // H5::Exception::dontPrint();
   H5::H5File *file = (H5::H5File*) getRptr(fp);
   
-  H5::IntType datatype(H5::PredType::IEEE_F64LE);
-  
   hsize_t dim[2];
   dim[0] = REAL(nrows)[0];
   dim[1] = REAL(ncols)[0];
   H5::DataSpace data_space(2, dim);
   
   H5::DataSet *dataset = new H5::DataSet;
-  *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space);
+  if (INT(type) == TYPE_DOUBLE)
+  {
+    H5::DataType datatype(H5::PredType::IEEE_F64LE);
+    *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space);
+  }
+  else // if (INT(type) == TYPE_FLOAT)
+  {
+    H5::DataType datatype(H5::PredType::IEEE_F32LE);
+    *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space);
+  }
   
   newRptr(dataset, ret, hdf_object_finalizer<H5::DataSet>);
   UNPROTECT(1);

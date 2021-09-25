@@ -26,6 +26,9 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' @param type Storage type for the matrix. Should be one of 'int', 'float', or 'double'.
     initialize = function(file, name, nrows, ncols, type="double")
     {
+      type = match.arg(tolower(type), c("double", "float"))
+      type = type_str2int(type)
+      
       private$file = file
       private$name = name
       private$nrows = as.double(nrows)
@@ -41,9 +44,11 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' Print some basic info about an hdfmat object.
     print = function()
     {
-      cat(paste0("## A ",
-        private$nrows, "x", private$ncols, " hdfmat object ", 
-        private$file, "\n"))
+      cat(paste0("## An hdfmat object\n", 
+        "  * Location: ", private$file,
+        "  * Dimension: ", private$nrows, "x", private$ncols,
+        "  * Type: ", type_int2str(private$type),
+        "\n"))
     },
     
     
@@ -52,10 +57,25 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' @param x The input matrix. Must be double or float.
     fill = function(x)
     {
-      # TODO check fundamental type
+      if (!is.matrix(x) && !is.float(x))
+        x = as.matrix(x)
+      
+      if (private$type == TYPE_DOUBLE)
+      {
+        if (float::is.float(x))
+          x = float::dbl(x)
+        else if (typeof(x) != "double")
+          storage.mode(x) = "double"
+      }
+      else # if (private$type == TYPE_FLOAT)
+      {
+        if (!float::is.float(x))
+          x = float::fl(x)@Data
+      }
+      
       x = t(x)
       dim(x) = rev(dim(x))
-      .Call(R_hdfmat_fill, private$ds, x)
+      .Call(R_hdfmat_fill, private$ds, x, private$type)
       invisible(self)
     },
     
@@ -64,7 +84,10 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' Read an hdfmat-stored matrix into memory. Really only meant for testing.
     read = function()
     {
-      ret = .Call(R_hdfmat_read, private$nrows, private$ncols, private$ds)
+      ret = .Call(R_hdfmat_read, private$nrows, private$ncols, private$ds, private$type)
+      if (private$type == TYPE_FLOAT)
+        ret = float::float32(ret)
+      
       t(ret)
     },
     
@@ -76,7 +99,7 @@ hdfmatR6 = R6::R6Class("cpumat",
     scale = function(v)
     {
       v = as.double(v)
-      .Call(R_hdfmat_scale, private$nrows, private$ncols, private$ds, v)
+      .Call(R_hdfmat_scale, private$nrows, private$ncols, private$ds, v, private$type)
       invisible(self)
     },
     
@@ -87,7 +110,7 @@ hdfmatR6 = R6::R6Class("cpumat",
     set_diag = function(v)
     {
       v = as.double(v)
-      .Call(R_hdfmat_set_diag, private$nrows, private$ncols, private$ds, v)
+      .Call(R_hdfmat_set_diag, private$nrows, private$ncols, private$ds, v, private$type)
       invisible(self)
     },
     
@@ -98,8 +121,24 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' @param x Input matrix. Fundamental type can be double, float, or int.
     crossprod = function(x)
     {
-      storage.mode(x) = "double"
-      .Call(R_hdfmat_cp, x, private$ds)
+      n = ncol(x)
+      if (n != private$nrows || n != private$ncols)
+        stop(paste0("hdfmat dimension ", private$nrows, "x", private$ncols, " different from crossprod of input ", n, "x", n))
+      
+      if (private$type == TYPE_DOUBLE)
+      {
+        if (float::is.float(x))
+          x = float::dbl(x)
+        else if (typeof(x) != "double")
+          storage.mode(x) = "double"
+      }
+      else # if (private$type == TYPE_FLOAT)
+      {
+        if (!float::is.float(x))
+          x = float::fl(x)@Data
+      }
+      
+      .Call(R_hdfmat_cp, x, private$ds, private$type)
       invisible(self)
     },
     
@@ -116,7 +155,11 @@ hdfmatR6 = R6::R6Class("cpumat",
       
       k = as.integer(k)
       n = as.double(private$nrows)
-      .Call(R_hdfmat_eigen_sym, k, n, private$ds)
+      values = .Call(R_hdfmat_eigen_sym, k, n, private$ds, private$type)
+      if (private$type == TYPE_FLOAT)
+        values = float::float32(values)
+      
+      values
     }
   ),
   

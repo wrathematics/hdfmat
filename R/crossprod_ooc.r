@@ -14,8 +14,13 @@
 #' @export
 crossprod_ooc = function(x, file, name="crossprod")
 {
-  if (!is.matrix(x) || !is.double(x))
-    stop("'x' must be a numeric matrix")
+  if (!is.matrix(x) && !float::is.float(x))
+    x = as.matrix(x)
+  
+  if (float::is.float(x))
+    x = x@Data
+  else if (!is.double(x))
+    storage.mode(x) = "double"
   
   n = as.double(ncol(x))
   

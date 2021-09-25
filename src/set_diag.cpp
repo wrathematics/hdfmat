@@ -2,6 +2,7 @@
 
 #include "hdfmat.h"
 #include "extptr.h"
+#include "types.h"
 
 
 template <typename T>
@@ -31,7 +32,7 @@ static inline void set_diag(const T val, const hsize_t m, const hsize_t n,
 
 
 
-extern "C" SEXP R_hdfmat_set_diag(SEXP m_, SEXP n_, SEXP ds, SEXP val_)
+extern "C" SEXP R_hdfmat_set_diag(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type)
 {
   // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
@@ -40,7 +41,10 @@ extern "C" SEXP R_hdfmat_set_diag(SEXP m_, SEXP n_, SEXP ds, SEXP val_)
   const hsize_t n = (hsize_t) REAL(n_)[0];
   const double val = REAL(val_)[0];
   
-  set_diag(val, m, n, dataset, H5::PredType::IEEE_F64LE);
+  if (INT(type) == TYPE_DOUBLE)
+    set_diag(val, m, n, dataset, H5::PredType::IEEE_F64LE);
+  else // if (INT(type) == TYPE_FLOAT)
+    set_diag((float)val, m, n, dataset, H5::PredType::IEEE_F32LE);
   
   return R_NilValue;
 }

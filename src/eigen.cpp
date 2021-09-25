@@ -1,6 +1,8 @@
 #include <cmath>
 #include <cstdlib>
 
+#include <float/float32.h>
+
 #include <fml/src/fml/cpu/cpumat.hh>
 #include <fml/src/fml/cpu/cpuvec.hh>
 #include <fml/src/fml/cpu/linalg/blas.hh>
@@ -8,6 +10,7 @@
 
 #include "hdfmat.h"
 #include "extptr.h"
+#include "types.h"
 
 #define OMP_MIN_SIZE 2500
 
@@ -173,7 +176,7 @@ static inline void eigen_sym(const hsize_t n, const int k,
 
 
 
-extern "C" SEXP R_hdfmat_eigen_sym(SEXP k_, SEXP n_, SEXP ds)
+extern "C" SEXP R_hdfmat_eigen_sym(SEXP k_, SEXP n_, SEXP ds, SEXP type)
 {
   SEXP values;
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
@@ -181,8 +184,16 @@ extern "C" SEXP R_hdfmat_eigen_sym(SEXP k_, SEXP n_, SEXP ds)
   const int k = INT(k_);
   const hsize_t n = (hsize_t) DBL(n_);
   
-  PROTECT(values = allocVector(REALSXP, k));
-  eigen_sym(n, k, REAL(values), dataset, H5::PredType::IEEE_F64LE);
+  if (INT(type) == TYPE_DOUBLE)
+  {
+    PROTECT(values = allocVector(REALSXP, k));
+    eigen_sym(n, k, REAL(values), dataset, H5::PredType::IEEE_F64LE);
+  }
+  else // if (INT(type) == TYPE_FLOAT)
+  {
+    PROTECT(values = allocVector(INTSXP, k));
+    eigen_sym(n, k, FLOAT(values), dataset, H5::PredType::IEEE_F64LE);
+  }
   
   UNPROTECT(1);
   return values;

@@ -1,11 +1,13 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <float/float32.h>
+
 #include <fml/src/fml/cpu/linalg/blas.hh>
 
 #include "hdfmat.h"
 #include "extptr.h"
-
+#include "types.h"
 
 
 template <typename T>
@@ -40,7 +42,7 @@ static inline void cp(const int m, const int n, const T *x,
   free(cp_row);
 }
 
-extern "C" SEXP R_hdfmat_cp(SEXP x, SEXP ds)
+extern "C" SEXP R_hdfmat_cp(SEXP x, SEXP ds, SEXP type)
 {
   // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
@@ -48,7 +50,10 @@ extern "C" SEXP R_hdfmat_cp(SEXP x, SEXP ds)
   const int m = nrows(x);
   const int n = ncols(x);
   
-  cp(m, n, REAL(x), dataset, H5::PredType::IEEE_F64LE);
+  if (INT(type) == TYPE_DOUBLE)
+    cp(m, n, REAL(x), dataset, H5::PredType::IEEE_F64LE);
+  else // if (INT(type) == TYPE_FLOAT)
+    cp(m, n, FLOAT(x), dataset, H5::PredType::IEEE_F32LE);
   
   return R_NilValue;
 }
