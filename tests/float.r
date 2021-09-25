@@ -18,4 +18,5 @@ truth = float::fl(alpha * x)
 
 stopifnot(all.equal(test, truth))
 
+h$close()
 unlink(f)

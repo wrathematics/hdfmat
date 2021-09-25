@@ -18,4 +18,5 @@ truth = c(9450.2858568857428, 4.714143114255676, 5.0978833483225391e-13)
 tol = 1e-6
 stopifnot(all.equal(test, truth, tol))
 
+h$close()
 unlink(f)

@@ -8,6 +8,7 @@
 #' @useDynLib hdfmat R_hdfmat_cp
 #' @useDynLib hdfmat R_hdfmat_eigen_sym
 #' @useDynLib hdfmat R_hdfmat_fill
+#' @useDynLib hdfmat R_hdfmat_finalize
 #' @useDynLib hdfmat R_hdfmat_init
 #' @useDynLib hdfmat R_hdfmat_open
 #' @useDynLib hdfmat R_hdfmat_read
@@ -41,14 +42,25 @@ hdfmatR6 = R6::R6Class("cpumat",
     
     
     #' @details
+    #' Closes the file.
+    close = function()
+    {
+      private$finalize()
+    },
+    
+    
+    #' @details
     #' Print some basic info about an hdfmat object.
     print = function()
     {
-      cat(paste0("## An hdfmat object\n", 
-        "  * Location: ", private$file,
-        "  * Dimension: ", private$nrows, "x", private$ncols,
-        "  * Type: ", type_int2str(private$type),
-        "\n"))
+      if (is.null(private$fp))
+        cat(paste0(" ## An invalid hdfmat object - perhaps it is closed?\n"))
+      else
+        cat(paste0("## An hdfmat object\n", 
+          "  * Location: ", private$file,
+          "  * Dimension: ", private$nrows, "x", private$ncols,
+          "  * Type: ", type_int2str(private$type),
+          "\n"))
     },
     
     
@@ -165,6 +177,20 @@ hdfmatR6 = R6::R6Class("cpumat",
   
   
   private = list(
+    finalize = function()
+    {
+      if (is.null(private$fp))
+        return(invisible(self))
+      
+      .Call(R_hdfmat_finalize, private$fp, private$ds)
+      
+      private$ds = NULL
+      private$fp = NULL
+      invisible(gc())
+      
+      invisible(self)
+    },
+    
     file = "",
     name = "",
     nrows = 0,

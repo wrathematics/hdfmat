@@ -47,3 +47,16 @@ extern "C" SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP t
   UNPROTECT(1);
   return ret;
 }
+
+
+
+extern "C" SEXP R_hdfmat_finalize(SEXP fp, SEXP ds)
+{
+  H5::H5File *file = (H5::H5File*) getRptr(fp);
+  H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
+  
+  dataset->close();
+  file->close();
+  
+  return R_NilValue;
+}

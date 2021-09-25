@@ -19,4 +19,5 @@ diag(truth) = v
 
 stopifnot(all.equal(test, truth))
 
+h$close()
 unlink(f)
