@@ -37,7 +37,8 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
-    
+    #' @details
+    #' Print some basic info about an hdfmat object.
     print = function()
     {
       cat(paste0("## A ",
@@ -46,9 +47,12 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
-    
+    #' @details
+    #' Fill an hdfmat file with the input matrix. Really only meant for testing.
+    #' @param x The input matrix. Must be double or float.
     fill = function(x)
     {
+      # TODO check fundamental type
       x = t(x)
       dim(x) = rev(dim(x))
       .Call(R_hdfmat_fill, private$ds, x)
@@ -56,7 +60,8 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
-    
+    #' @details
+    #' Read an hdfmat-stored matrix into memory. Really only meant for testing.
     read = function()
     {
       ret = .Call(R_hdfmat_read, private$nrows, private$ncols, private$ds)
@@ -64,7 +69,10 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
-    
+    #' @details
+    #' Scale (multiply) all values of an hdfmat-stored matrix by the input
+    #' scalar.
+    #' @param v Scalar. Fundamental type can be double, float, or int.
     scale = function(v)
     {
       v = as.double(v)
@@ -73,7 +81,9 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
-    
+    #' @details
+    #' Set the diagonal of an hdfmat-stored matrix to the input scalar.
+    #' @param v Scalar. Fundamental type can be double, float, or int.
     set_diag = function(v)
     {
       v = as.double(v)
@@ -82,7 +92,10 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
-    
+    #' @details
+    #' Calculate the crossproduct of an input matrix with result stored in an
+    #' hdfmat. Useful when the number of columns of the input is very large.
+    #' @param x Input matrix. Fundamental type can be double, float, or int.
     crossprod = function(x)
     {
       storage.mode(x) = "double"
@@ -91,7 +104,11 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
-    
+    #' @details
+    #' Compute approximations to the eigenvalues of a square symmetric
+    #' hdfmat-stored matrix using the Lanczos method. The matrix is not checked
+    #' for symmetry.
+    #' @param k The number of Lanczos iterations.
     eigen = function(k=3)
     {
       if (private$nrows != private$ncols)
