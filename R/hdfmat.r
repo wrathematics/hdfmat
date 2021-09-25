@@ -54,12 +54,12 @@ hdfmatR6 = R6::R6Class("cpumat",
     print = function()
     {
       if (is.null(private$fp))
-        cat(paste0(" ## An invalid hdfmat object - perhaps it is closed?\n"))
+        cat(paste0("# An invalid hdfmat object - perhaps it is closed?\n"))
       else
-        cat(paste0("## An hdfmat object\n", 
-          "  * Location: ", private$file,
-          "  * Dimension: ", private$nrows, "x", private$ncols,
-          "  * Type: ", type_int2str(private$type),
+        cat(paste0("# An hdfmat object\n", 
+          "  * Location: ", private$file, "\n",
+          "  * Dimension: ", private$nrows, "x", private$ncols, "\n",
+          "  * Type: ", type_int2str(private$type), "\n",
           "\n"))
     },
     
