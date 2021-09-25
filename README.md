@@ -12,11 +12,12 @@ Note that I/O will be the main bottleneck since this is out of core. You could d
 
 ## Installation
 
-The package depends on the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html) and links with the [fmlr package](https://hpcran.org/packages/fmlr/index.html):
+The package depends on the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html) and links with the [float](https://cran.r-project.org/web/packages/float/index.html) and [fmlr](https://hpcran.org/packages/fmlr/index.html) packages:
 
 ```r
 repos = c("https://hpcran.org", "https://cran.rstudio.com")
 install.packages("R6", repos=repos)
+install.packages("float", repos=repos)
 install.packages("fmlr", repos=repos)
 ```
 
