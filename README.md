@@ -10,6 +10,7 @@ This package provides some out-of-core matrix operations via HDF5. The main purp
 Note that I/O will be the main bottleneck since this is out of core. You could do this much faster using a distributed resource like a cluster, using say the [pbdDMAT package](https://github.com/RBigData/pbdDMAT). But if all you have available is a small compute resource like a workstation, then this can get the job done.
 
 
+
 ## Installation
 
 The package depends on the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html) and links with the [float](https://cran.r-project.org/web/packages/float/index.html) and [fmlr](https://hpcran.org/packages/fmlr/index.html) packages:
@@ -28,6 +29,7 @@ remotes::install_github("wrathematics/hdfmat")
 ```
 
 You will need a system installation of HDF5 to build the package. The package probably does not build on Windows at the moment. If you know how to set `src/Makevars.win` to link against HDF5, please let me know.
+
 
 
 ## Package Use
