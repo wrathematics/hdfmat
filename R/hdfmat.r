@@ -1,6 +1,6 @@
 #' hdfmat class
 #' 
-#' Storage and methods for CPU matrix data.
+#' Storage and methods for matrix data in an HDF5 file.
 #' 
 #' @details
 #' Data is held in an external pointer.

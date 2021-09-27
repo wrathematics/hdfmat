@@ -5,7 +5,7 @@
 \alias{hdfmatR6}
 \title{hdfmat class}
 \description{
-Storage and methods for CPU matrix data.
+Storage and methods for matrix data in an HDF5 file.
 }
 \details{
 Data is held in an external pointer.
@@ -14,6 +14,7 @@ Data is held in an external pointer.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{hdfmatR6$new()}}
+\item \href{#method-close}{\code{hdfmatR6$close()}}
 \item \href{#method-print}{\code{hdfmatR6$print()}}
 \item \href{#method-fill}{\code{hdfmatR6$fill()}}
 \item \href{#method-read}{\code{hdfmatR6$read()}}
@@ -47,6 +48,19 @@ Data is held in an external pointer.
 }
 \subsection{Details}{
 Class initializer.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-close"></a>}}
+\if{latex}{\out{\hypertarget{method-close}{}}}
+\subsection{Method \code{close()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$close()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+Closes the file.
 }
 
 }
