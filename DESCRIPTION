@@ -4,6 +4,8 @@ Title: HDF5 Matrix Operations
 Version: 0.1-0
 Description: Some out-of-core matrix operations via HDF5.
 License: BSD 2-clause License + file LICENSE
+SystemRequirements:
+    HDF5
 Depends:
     R (>= 3.6.0)
 Imports:
