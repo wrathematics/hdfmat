@@ -9,6 +9,8 @@
 #include <R.h>
 #include <Rinternals.h>
 
+#include <float/float32.h>
+
 #define CHARPT(x,i) ((char*)CHAR(STRING_ELT(x,i)))
 #define INT(x) (INTEGER(x)[0])
 #define DBL(x) (REAL(x)[0])

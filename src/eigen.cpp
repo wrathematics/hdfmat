@@ -1,7 +1,4 @@
-#include <cmath>
-#include <cstdlib>
-
-#include <float/float32.h>
+#include "lanczos.hh"
 
 #include <fml/src/fml/cpu/cpumat.hh>
 #include <fml/src/fml/cpu/cpuvec.hh>
@@ -12,84 +9,14 @@
 #include "extptr.h"
 #include "types.h"
 
-#define OMP_MIN_SIZE 2500
-
-
-template <typename T>
-static inline T dot(const hsize_t n, const T *x, const T *y)
-{
-  T d = 0;
-  #pragma omp parallel for simd reduction(+:d) if(n > OMP_MIN_SIZE)
-  for (hsize_t i=0; i<n; i++)
-    d += x[i] * y[i];
-  
-  return d;
-}
-
-
-
-template <typename T>
-static inline T l2norm(const hsize_t n, const T *x)
-{
-  return sqrt(dot(n, x, x));
-}
-
-
-
-template <typename T>
-static inline void alloc(const hsize_t n, const int k, T **alpha, T **beta, T **q)
-{
-  *alpha = (T *) malloc(k * sizeof(**alpha));
-  *beta = (T *) malloc(k * sizeof(**beta));
-  *q = (T *) malloc(n*k * sizeof(**q));
-}
-
-
-
-template <typename T>
-static inline void initialize(const hsize_t n, const int k, T *q)
-{
-  memset(q, 0, n*k*sizeof(*q));
-  GetRNGstate();
-  
-  for (hsize_t i=0; i<n; i++)
-    q[i] = (T)unif_rand();
-  
-  T l2 = l2norm(n, q);
-  #pragma omp parallel for simd if(n > OMP_MIN_SIZE)
-  for (hsize_t i=0; i<n; i++)
-    q[i] /= l2;
-  
-  PutRNGstate();
-}
-
-
-
-template <typename T>
-static inline void tridiagonal(const int k, const T *alpha, const T *beta,
-  T *td)
-{
-  memset(td, 0, k*k*sizeof(T));
-  
-  for (int i=0; i<k; i++)
-    td[i + k*i] = alpha[i];
-  
-  for (int i=0; i<k-1; i++)
-  {
-    td[i + k*(i+1)] = beta[i];
-    td[i+1 + k*i] = beta[i];
-  }
-}
-
-
 
 template <typename T>
 static inline void lanczos(const hsize_t n, const int k,
   T *alpha, T *beta, T *q, H5::DataSet *dataset, H5::PredType h5type)
 {
   // H5::Exception::dontPrint();
-  T *A_j = (T*) malloc(n * sizeof(*A_j));
-  T *v = (T*) malloc(n * sizeof(*v));
+  T *A_j = (T*) std::malloc(n * sizeof(*A_j));
+  T *v = (T*) std::malloc(n * sizeof(*v));
   
   hsize_t slice[2];
   slice[0] = 1;
@@ -129,9 +56,9 @@ static inline void lanczos(const hsize_t n, const int k,
       for (hsize_t j=0; j<n; j++)
         v[j] -= alpha[i] * q[j + n*i];
     }
-  
+    
     beta[i] = l2norm(n, v);
-  
+    
     if (i < k-1)
     {
       for (hsize_t j=0; j<n; j++)
@@ -139,8 +66,8 @@ static inline void lanczos(const hsize_t n, const int k,
     }
   }
   
-  free(A_j);
-  free(v);
+  std::free(A_j);
+  std::free(v);
 }
 
 
@@ -154,17 +81,17 @@ static inline void eigen_sym(const hsize_t n, const int k,
   initialize(n, k, q);
   
   lanczos(n, k, alpha, beta, q, dataset, h5type);
-  free(q);
+  std::free(q);
   
-  T *td = (T *) malloc(k*k * sizeof(*td));
+  T *td = (T *) std::malloc(k*k * sizeof(*td));
   tridiagonal(k, alpha, beta, td);
-  free(alpha);
-  free(beta);
+  std::free(alpha);
+  std::free(beta);
   
   fml::cpumat<T> td_mat(td, k, k, false);
   fml::cpuvec<T> values_vec(values, k, false);
   fml::linalg::eigen_sym(td_mat, values_vec);
-  free(td);
+  std::free(td);
   
   values_vec.rev();
   for (int i=0; i<k; i++)
