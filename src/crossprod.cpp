@@ -14,8 +14,8 @@ template <typename T>
 static inline void cp(const int m, const int n, const T *x,
   H5::DataSet *dataset, H5::PredType h5type)
 {
-  T *y = (T*) malloc(m * sizeof(*y));
-  T *cp_row = (T*) malloc(n * sizeof(*cp_row));
+  T *y = (T*) std::malloc(m * sizeof(*y));
+  T *cp_row = (T*) std::malloc(n * sizeof(*cp_row));
   
   hsize_t slice[2];
   slice[0] = (hsize_t) 1;
@@ -38,8 +38,8 @@ static inline void cp(const int m, const int n, const T *x,
     dataset->write(cp_row, h5type, mem_space, data_space);
   }
   
-  free(y);
-  free(cp_row);
+  std::free(y);
+  std::free(cp_row);
 }
 
 extern "C" SEXP R_hdfmat_cp(SEXP x, SEXP ds, SEXP type)

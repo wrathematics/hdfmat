@@ -71,6 +71,7 @@ static inline void tridiagonal(const int k, const T *alpha, const T *beta,
 {
   std::memset(td, 0, k*k*sizeof(T));
   
+  #pragma omp for simd
   for (int i=0; i<k; i++)
     td[i + k*i] = alpha[i];
   

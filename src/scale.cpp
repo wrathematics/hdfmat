@@ -9,7 +9,7 @@ template <typename T>
 static inline void scale(const T val, const hsize_t m, const hsize_t n,
   H5::DataSet *dataset, H5::PredType h5type)
 {
-  T *x = (T*) malloc(n * sizeof(*x));
+  T *x = (T*) std::malloc(n * sizeof(*x));
   
   hsize_t slice[2];
   slice[0] = 1;
@@ -33,7 +33,7 @@ static inline void scale(const T val, const hsize_t m, const hsize_t n,
     dataset->write(x, h5type, mem_space, data_space);
   }
   
-  free(x);
+  std::free(x);
 }
 
 
