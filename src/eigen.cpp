@@ -35,8 +35,8 @@ static inline void lanczos(const hsize_t n, const int k,
     {
       offset[0] = j;
       data_space.selectHyperslab(H5S_SELECT_SET, slice, offset);
-      
       dataset->read(A_j, h5type, mem_space, data_space);
+      
       v[j] = dot(n, A_j, q+n*i);
     }
     
@@ -45,14 +45,18 @@ static inline void lanczos(const hsize_t n, const int k,
     if (i == 0)
     {
       // v = v - alpha[i]*q[, i]
+      #pragma omp for simd if(n > fml::omp::OMP_MIN_SIZE)
       for (hsize_t j=0; j<n; j++)
         v[j] -= alpha[i] * q[j + n*i];
     }
     else
     {
       // v = v - beta[i-1]*q[, i-1] - alpha[i]*q[, i]
+      #pragma omp for simd if(n > fml::omp::OMP_MIN_SIZE)
       for (hsize_t j=0; j<n; j++)
         v[j] -= beta[i-1] * q[j + n*(i-1)];
+      
+      #pragma omp for simd if(n > fml::omp::OMP_MIN_SIZE)
       for (hsize_t j=0; j<n; j++)
         v[j] -= alpha[i] * q[j + n*i];
     }
@@ -61,6 +65,7 @@ static inline void lanczos(const hsize_t n, const int k,
     
     if (i < k-1)
     {
+      #pragma omp for simd if(n > fml::omp::OMP_MIN_SIZE)
       for (hsize_t j=0; j<n; j++)
         q[j + n*(i+1)] = v[j] / beta[i];
     }

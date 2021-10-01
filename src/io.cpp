@@ -41,7 +41,6 @@ static inline void read(const hsize_t m, const hsize_t n, T *x,
   offset[0] = 0;
   
   data_space.selectHyperslab(H5S_SELECT_SET, slice, offset);
-  
   dataset->read(x, h5type, mem_space, data_space);
 }
 
