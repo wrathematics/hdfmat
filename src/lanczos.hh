@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <fml/src/fml/_internals/omp.hh>
+#include "omp.h"
 
 #include <H5Cpp.h>
 
@@ -19,7 +19,7 @@ template <typename T>
 static inline T dot(const hsize_t n, const T *x, const T *y)
 {
   T d = 0;
-  #pragma omp parallel for simd reduction(+:d) if(n > fml::omp::OMP_MIN_SIZE)
+  #pragma omp parallel for simd reduction(+:d) if(n > OMP_MIN_LEN)
   for (hsize_t i=0; i<n; i++)
     d += x[i] * y[i];
   
@@ -56,7 +56,7 @@ static inline void initialize(const hsize_t n, const int k, T *q)
     q[i] = (T)unif_rand();
   
   T l2 = l2norm(n, q);
-  #pragma omp parallel for simd if(n > fml::omp::OMP_MIN_SIZE)
+  #pragma omp parallel for simd if(n > OMP_MIN_LEN)
   for (hsize_t i=0; i<n; i++)
     q[i] /= l2;
   

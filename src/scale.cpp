@@ -1,6 +1,6 @@
 #include <cstdlib>
 
-#include <fml/src/fml/_internals/omp.hh>
+#include "omp.h"
 
 #include "hdfmat.h"
 #include "extptr.h"
@@ -29,7 +29,7 @@ static inline void scale(const T val, const hsize_t m, const hsize_t n,
     data_space.selectHyperslab(H5S_SELECT_SET, slice, offset);
     dataset->read(x, h5type, mem_space, data_space);
     
-    #pragma omp for simd if(n > fml::omp::OMP_MIN_SIZE)
+    #pragma omp for simd if(n > OMP_MIN_LEN)
     for (hsize_t j=0; j<n; j++)
       x[j] *= val;
     

@@ -1,4 +1,5 @@
 #include "lanczos.hh"
+#include "omp.h"
 
 #include <fml/src/fml/cpu/cpumat.hh>
 #include <fml/src/fml/cpu/cpuvec.hh>
@@ -39,7 +40,7 @@ static inline void lanczos(const hsize_t m, const hsize_t n, const int k,
       data_space.selectHyperslab(H5S_SELECT_SET, slice, offset);
       dataset->read(A_j, h5type, mem_space, data_space);
       
-      #pragma omp for simd if(n > fml::omp::OMP_MIN_SIZE)
+      #pragma omp for simd if(n > OMP_MIN_LEN)
       for (hsize_t jj=0; jj<n; jj++)
         v[m+jj] += A_j[jj] * q[j + (m+n)*i];
       
@@ -51,18 +52,18 @@ static inline void lanczos(const hsize_t m, const hsize_t n, const int k,
     if (i == 0)
     {
       // v = v - alpha[i]*q[, i]
-      #pragma omp for simd if(m+n > fml::omp::OMP_MIN_SIZE)
+      #pragma omp for simd if(m+n > OMP_MIN_LEN)
       for (hsize_t j=0; j<m+n; j++)
         v[j] -= alpha[i] * q[j + (m+n)*i];
     }
     else
     {
       // v = v - beta[i-1]*q[, i-1] - alpha[i]*q[, i]
-      #pragma omp for simd if(m+n > fml::omp::OMP_MIN_SIZE)
+      #pragma omp for simd if(m+n > OMP_MIN_LEN)
       for (hsize_t j=0; j<m+n; j++)
         v[j] -= beta[i-1] * q[j + (m+n)*(i-1)];
       
-      #pragma omp for simd if(m+n > fml::omp::OMP_MIN_SIZE)
+      #pragma omp for simd if(m+n > OMP_MIN_LEN)
       for (hsize_t j=0; j<m+n; j++)
         v[j] -= alpha[i] * q[j + (m+n)*i];
     }
@@ -71,7 +72,7 @@ static inline void lanczos(const hsize_t m, const hsize_t n, const int k,
     
     if (i < k-1)
     {
-      #pragma omp for simd if(m+n > fml::omp::OMP_MIN_SIZE)
+      #pragma omp for simd if(m+n > OMP_MIN_LEN)
       for (hsize_t j=0; j<m+n; j++)
         q[j + (m+n)*(i+1)] = v[j] / beta[i];
     }
