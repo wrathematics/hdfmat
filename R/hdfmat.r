@@ -14,6 +14,7 @@
 #' @useDynLib hdfmat R_hdfmat_read
 #' @useDynLib hdfmat R_hdfmat_scale
 #' @useDynLib hdfmat R_hdfmat_set_diag
+#' @useDynLib hdfmat R_hdfmat_svd
 #' 
 #' @rdname hdfmat-class
 #' @name hdfmat-class
@@ -171,6 +172,21 @@ hdfmatR6 = R6::R6Class("cpumat",
       k = as.integer(k)
       n = as.double(private$nrows)
       values = .Call(R_hdfmat_eigen_sym, k, n, private$ds, private$type)
+      if (private$type == TYPE_FLOAT)
+        values = float::float32(values)
+      
+      values
+    },
+    
+    
+    #' @details
+    #' Compute approximations to the singular values of a rectangular
+    #' hdfmat-stored matrix using the Lanczos method.
+    #' @param k The number of Lanczos iterations.
+    svd = function(k=3)
+    {
+      k = as.integer(k)
+      values = .Call(R_hdfmat_svd, k, private$nrows, private$ncols, private$ds, private$type)
       if (private$type == TYPE_FLOAT)
         values = float::float32(values)
       

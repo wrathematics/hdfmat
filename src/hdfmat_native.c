@@ -15,6 +15,7 @@ extern SEXP R_hdfmat_open(SEXP filename);
 extern SEXP R_hdfmat_read(SEXP m_, SEXP n_, SEXP ds, SEXP type);
 extern SEXP R_hdfmat_scale(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type);
 extern SEXP R_hdfmat_set_diag(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type);
+extern SEXP R_hdfmat_svd(SEXP k_, SEXP m_, SEXP n_, SEXP ds, SEXP type);
 
 static const R_CallMethodDef CallEntries[] = {
   {"R_hdfmat_cp", (DL_FUNC) &R_hdfmat_cp, 2},
@@ -26,6 +27,7 @@ static const R_CallMethodDef CallEntries[] = {
   {"R_hdfmat_open", (DL_FUNC) &R_hdfmat_open, 1},
   {"R_hdfmat_scale", (DL_FUNC) &R_hdfmat_scale, 5},
   {"R_hdfmat_set_diag", (DL_FUNC) &R_hdfmat_set_diag, 5},
+  {"R_hdfmat_svd", (DL_FUNC) &R_hdfmat_svd, 5},
   {NULL, NULL, 0}
 };
 

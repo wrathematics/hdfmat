@@ -22,6 +22,7 @@ Data is held in an external pointer.
 \item \href{#method-set_diag}{\code{hdfmatR6$set_diag()}}
 \item \href{#method-crossprod}{\code{hdfmatR6$crossprod()}}
 \item \href{#method-eigen}{\code{hdfmatR6$eigen()}}
+\item \href{#method-svd}{\code{hdfmatR6$svd()}}
 \item \href{#method-clone}{\code{hdfmatR6$clone()}}
 }
 }
@@ -191,6 +192,27 @@ hdfmat. Useful when the number of columns of the input is very large.
 Compute approximations to the eigenvalues of a square symmetric
 hdfmat-stored matrix using the Lanczos method. The matrix is not checked
 for symmetry.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-svd"></a>}}
+\if{latex}{\out{\hypertarget{method-svd}{}}}
+\subsection{Method \code{svd()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$svd(k = 3)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{k}}{The number of Lanczos iterations.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Compute approximations to the singular values of a rectangular
+hdfmat-stored matrix using the Lanczos method.
 }
 
 }
