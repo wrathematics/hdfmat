@@ -72,6 +72,9 @@ hdfmatR6 = R6::R6Class("cpumat",
       if (!is.matrix(x) && !is.float(x))
         x = as.matrix(x)
       
+      if (!all(dim(x) == c(private$nrows, private$ncols)))
+        stop("dimensions of x and hdfmat are non-conformable")
+      
       if (private$type == TYPE_DOUBLE)
       {
         if (float::is.float(x))
