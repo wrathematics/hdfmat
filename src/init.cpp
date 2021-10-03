@@ -27,8 +27,8 @@ extern "C" SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP t
   H5::H5File *file = (H5::H5File*) getRptr(fp);
   
   hsize_t dim[2];
-  dim[0] = REAL(nrows)[0];
-  dim[1] = REAL(ncols)[0];
+  dim[0] = DBL(nrows);
+  dim[1] = DBL(ncols);
   H5::DataSpace data_space(2, dim);
   
   H5::DataSet *dataset = new H5::DataSet;

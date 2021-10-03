@@ -51,8 +51,8 @@ extern "C" SEXP R_hdfmat_read(SEXP m_, SEXP n_, SEXP ds, SEXP type)
   // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
-  const hsize_t m = (hsize_t) REAL(m_)[0];
-  const hsize_t n = (hsize_t) REAL(n_)[0];
+  const hsize_t m = (hsize_t) DBL(m_);
+  const hsize_t n = (hsize_t) DBL(n_);
   
   if (INT(type) == TYPE_DOUBLE)
   {
