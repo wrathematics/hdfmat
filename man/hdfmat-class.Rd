@@ -83,18 +83,23 @@ Print some basic info about an hdfmat object.
 \if{latex}{\out{\hypertarget{method-fill}{}}}
 \subsection{Method \code{fill()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill(x, row_offset = 0)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{x}}{The input matrix. Must be double or float.}
+
+\item{\code{row_offset}}{The number of rows to skip. Useful when building the
+hdfmat in chunks.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-Fill an hdfmat file with the input matrix. Really only meant for testing.
+Fill an hdfmat matrix (or part of it) with the input matrix. The number
+of rows of the input must be less than or equal to the number of rows
+allocated for the hdfmat, and the number of columns must be equal.
 }
 
 }

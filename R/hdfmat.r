@@ -66,15 +66,25 @@ hdfmatR6 = R6::R6Class("cpumat",
     
     
     #' @details
-    #' Fill an hdfmat file with the input matrix. Really only meant for testing.
+    #' Fill an hdfmat matrix (or part of it) with the input matrix. The number
+    #' of rows of the input must be less than or equal to the number of rows
+    #' allocated for the hdfmat, and the number of columns must be equal.
     #' @param x The input matrix. Must be double or float.
-    fill = function(x)
+    #' @param row_offset The number of rows to skip. Useful when building the
+    #' hdfmat in chunks.
+    fill = function(x, row_offset=0)
     {
       if (!is.matrix(x) && !is.float(x))
         x = as.matrix(x)
       
-      if (!all(dim(x) == c(private$nrows, private$ncols)))
+      if (!is.numeric(row_offset) || is.na(row_offset) || length(row_offset) != 1 || row_offset < 0)
+        stop("row_offset should be an int")
+      else if (private$nrows < nrow(x) || private$ncols != ncol(x))
         stop("dimensions of x and hdfmat are non-conformable")
+      else if (nrow(x) + row_offset > private$nrows)
+        stop("x and given row_offset incompatible with hdfmat")
+      
+      row_offset = floor(as.double(row_offset))
       
       if (private$type == TYPE_DOUBLE)
       {
@@ -91,7 +101,7 @@ hdfmatR6 = R6::R6Class("cpumat",
       
       x = t(x)
       dim(x) = rev(dim(x))
-      .Call(R_hdfmat_fill, private$ds, x, private$type)
+      .Call(R_hdfmat_fill, private$ds, x, row_offset, private$type)
       invisible(self)
     },
     
