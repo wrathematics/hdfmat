@@ -37,8 +37,8 @@ static inline void read(const hsize_t m, const hsize_t n, T *x,
   H5::DataSpace data_space = dataset->getSpace();
   
   hsize_t offset[2];
-  offset[1] = 0;
   offset[0] = 0;
+  offset[1] = 0;
   
   data_space.selectHyperslab(H5S_SELECT_SET, slice, offset);
   dataset->read(x, h5type, mem_space, data_space);
