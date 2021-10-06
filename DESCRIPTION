@@ -22,3 +22,4 @@ Authors@R: c(
     )
 Maintainer: Drew Schmidt <wrathematics@gmail.com>
 RoxygenNote: 7.1.1
+HPCRAN: io
