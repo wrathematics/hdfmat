@@ -31,12 +31,15 @@ Data is held in an external pointer.
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$new(file, name, nrows, ncols, type = "double")}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$new(open, file, name, nrows, ncols, type)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{open}}{Are you working with an existing matrix? If so, \code{nrows},
+\code{ncols}, and \code{type} are ignored (and intuited).}
+
 \item{\code{file}}{File to store data in.}
 
 \item{\code{name}}{Dataset name on disk.}

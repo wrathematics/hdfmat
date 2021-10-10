@@ -5,7 +5,7 @@
 #include "types.h"
 
 
-extern "C" SEXP R_hdfmat_open(SEXP filename)
+extern "C" SEXP R_hdfmat_create(SEXP filename)
 {
   SEXP ret;
   

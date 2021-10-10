@@ -6,11 +6,11 @@
 #' Data is held in an external pointer.
 #' 
 #' @useDynLib hdfmat R_hdfmat_cp
+#' @useDynLib hdfmat R_hdfmat_create
 #' @useDynLib hdfmat R_hdfmat_eigen_sym
 #' @useDynLib hdfmat R_hdfmat_fill
 #' @useDynLib hdfmat R_hdfmat_finalize
 #' @useDynLib hdfmat R_hdfmat_init
-#' @useDynLib hdfmat R_hdfmat_open
 #' @useDynLib hdfmat R_hdfmat_read
 #' @useDynLib hdfmat R_hdfmat_scale
 #' @useDynLib hdfmat R_hdfmat_set_diag
@@ -22,23 +22,20 @@ hdfmatR6 = R6::R6Class("cpumat",
   public = list(
     #' @details
     #' Class initializer.
+    #' @param open Are you working with an existing matrix? If so, \code{nrows},
+    #' \code{ncols}, and \code{type} are ignored (and intuited).
     #' @param file File to store data in.
     #' @param name Dataset name on disk.
     #' @param nrows,ncols The dimension of the matrix.
     #' @param type Storage type for the matrix. Should be one of 'int', 'float', or 'double'.
-    initialize = function(file, name, nrows, ncols, type="double")
+    initialize = function(open, file, name, nrows, ncols, type)
     {
-      type = match.arg(tolower(type), c("double", "float"))
-      type = type_str2int(type)
+      if (isTRUE(open))
+        private$open(file=file, name=name)
+      else
+        private$create(file=file, name=name, nrows=nrows, ncols=ncols, type=type)
       
-      private$file = file
-      private$name = name
-      private$nrows = as.double(nrows)
-      private$ncols = as.double(ncols)
-      private$type = type
-      
-      private$fp = .Call(R_hdfmat_open, file)
-      private$ds = .Call(R_hdfmat_init, private$fp, name, nrows, ncols, type)
+      invisible(self)
     },
     
     
@@ -206,6 +203,28 @@ hdfmatR6 = R6::R6Class("cpumat",
   
   
   private = list(
+    open = function(file, name)
+    {
+      stop("TODO")
+    },
+    
+    
+    create = function(file, name, nrows, ncols, type)
+    {
+      type = match.arg(tolower(type), c("double", "float"))
+      type = type_str2int(type)
+      
+      private$file = file
+      private$name = name
+      private$nrows = as.double(nrows)
+      private$ncols = as.double(ncols)
+      private$type = type
+      
+      private$fp = .Call(R_hdfmat_create, file)
+      private$ds = .Call(R_hdfmat_init, private$fp, name, nrows, ncols, type)
+    },
+    
+    
     finalize = function()
     {
       if (is.null(private$fp))
@@ -246,5 +265,5 @@ hdfmatR6 = R6::R6Class("cpumat",
 #' @export
 hdfmat = function(file, name, nrows, ncols, type="double")
 {
-  hdfmatR6$new(file=file, name=name, nrows=nrows, ncols=ncols, type=type)
+  hdfmatR6$new(open=FALSE, file=file, name=name, nrows=nrows, ncols=ncols, type=type)
 }
