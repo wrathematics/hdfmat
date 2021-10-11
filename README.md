@@ -32,9 +32,21 @@ You will need a system installation of HDF5 to build the package. The package pr
 
 
 
-## Package Use
+## Basic IO
 
-Here's a a basic example. We'll start by creating a basic matrix:
+The main package functions operate out-of-core, that is, on data stored on disk (out of memory) in an HDF5 file. In R, this file is managed as an hdfmat object. There are a few ways of getting the data into the correct format:
+
+1. Build your dataset using other tools (e.g. [hdf5r](https://cran.r-project.org/web/packages/hdf5r/index.html)) and "inherit" it as an hdfmat with `hdfmat_open()`.
+2. Create your new dataset using the `hdfmat()` constructor, and using the `fill()` method to add blocks of rows to the file.
+3. In the specialized case of having a matrix that fits in memory whose crossproduct you need computed out-of-core, you can use `crossprod_ooc()` or `tcrossprod_ooc()`. This makes sense only in the case where you need to calculate
+    * `crossprod()` when $m < n$ and $n$ is very large, or
+    * `tcrossprod()` when $m > n$ and $m$ is very large, or
+
+
+
+## Examples
+
+Here's a a basic example. We'll start by creating a simple matrix:
 
 ```r
 m = 3
