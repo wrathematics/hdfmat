@@ -6,11 +6,12 @@
 #' Data is held in an external pointer.
 #' 
 #' @useDynLib hdfmat R_hdfmat_cp
-#' @useDynLib hdfmat R_hdfmat_create
 #' @useDynLib hdfmat R_hdfmat_eigen_sym
 #' @useDynLib hdfmat R_hdfmat_fill
 #' @useDynLib hdfmat R_hdfmat_finalize
+#' @useDynLib hdfmat R_hdfmat_inherit
 #' @useDynLib hdfmat R_hdfmat_init
+#' @useDynLib hdfmat R_hdfmat_open
 #' @useDynLib hdfmat R_hdfmat_read
 #' @useDynLib hdfmat R_hdfmat_scale
 #' @useDynLib hdfmat R_hdfmat_set_diag
@@ -203,9 +204,25 @@ hdfmatR6 = R6::R6Class("cpumat",
   
   
   private = list(
-    open = function(file, name)
+    open = function(file, name, mode)
     {
-      stop("TODO")
+      private$file = file
+      private$name = name
+      
+      private$fp = .Call(R_hdfmat_open, file, mode)
+    },
+    
+    
+    inherit = function(file, name)
+    {
+      private$file = file
+      private$name = name
+      
+      private$open(file=file, name=name, mode=FILE_MODE_RW)
+      
+      ret = .Call(R_hdfmat_init, private$fp, name, nrows, ncols, type)
+      private$ds = ret[[1]]
+      
     },
     
     
@@ -214,13 +231,11 @@ hdfmatR6 = R6::R6Class("cpumat",
       type = match.arg(tolower(type), c("double", "float"))
       type = type_str2int(type)
       
-      private$file = file
-      private$name = name
       private$nrows = as.double(nrows)
       private$ncols = as.double(ncols)
       private$type = type
       
-      private$fp = .Call(R_hdfmat_create, file)
+      private$open(file=file, name=name, mode=FILE_MODE_CR)
       private$ds = .Call(R_hdfmat_init, private$fp, name, nrows, ncols, type)
     },
     
