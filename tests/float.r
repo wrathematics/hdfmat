@@ -1,4 +1,5 @@
 library(hdfmat)
+suppressMessages(library(float))
 
 f = tempfile()
 n = "mydata"
@@ -8,7 +9,7 @@ nr = 3
 nc = 10
 x = matrix(1:(nr*nc), nr, nc)
 
-h = hdfmat:::hdfmat(f, n, nr, nc, type)
+h = hdfmat::hdfmat(f, n, nr, nc, type)
 h$fill(x)
 alpha = 10
 h$scale(alpha)
