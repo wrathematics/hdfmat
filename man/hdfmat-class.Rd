@@ -20,8 +20,8 @@ Data is held in an external pointer.
 \item \href{#method-read}{\code{hdfmatR6$read()}}
 \item \href{#method-scale}{\code{hdfmatR6$scale()}}
 \item \href{#method-set_diag}{\code{hdfmatR6$set_diag()}}
-\item \href{#method-crossprod}{\code{hdfmatR6$crossprod()}}
-\item \href{#method-tcrossprod}{\code{hdfmatR6$tcrossprod()}}
+\item \href{#method-fill_crossprod}{\code{hdfmatR6$fill_crossprod()}}
+\item \href{#method-fill_tcrossprod}{\code{hdfmatR6$fill_tcrossprod()}}
 \item \href{#method-eigen}{\code{hdfmatR6$eigen()}}
 \item \href{#method-svd}{\code{hdfmatR6$svd()}}
 \item \href{#method-clone}{\code{hdfmatR6$clone()}}
@@ -162,11 +162,11 @@ Set the diagonal of an hdfmat-stored matrix to the input scalar.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-crossprod"></a>}}
-\if{latex}{\out{\hypertarget{method-crossprod}{}}}
-\subsection{Method \code{crossprod()}}{
+\if{html}{\out{<a id="method-fill_crossprod"></a>}}
+\if{latex}{\out{\hypertarget{method-fill_crossprod}{}}}
+\subsection{Method \code{fill_crossprod()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$crossprod(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill_crossprod(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -183,11 +183,11 @@ hdfmat. Useful when the number of columns of the input is very large.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-tcrossprod"></a>}}
-\if{latex}{\out{\hypertarget{method-tcrossprod}{}}}
-\subsection{Method \code{tcrossprod()}}{
+\if{html}{\out{<a id="method-fill_tcrossprod"></a>}}
+\if{latex}{\out{\hypertarget{method-fill_tcrossprod}{}}}
+\subsection{Method \code{fill_tcrossprod()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$tcrossprod(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill_tcrossprod(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

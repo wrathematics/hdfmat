@@ -144,7 +144,7 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' Calculate the crossproduct of an input matrix with result stored in an
     #' hdfmat. Useful when the number of columns of the input is very large.
     #' @param x Input matrix. Fundamental type can be double, float, or int.
-    crossprod = function(x)
+    fill_crossprod = function(x)
     {
       n = ncol(x)
       if (n != private$nrows || n != private$ncols)
@@ -173,7 +173,7 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' stored in an hdfmat. Useful when the number of columns of the input is
     #' very large.
     #' @param x Input matrix. Fundamental type can be double, float, or int.
-    tcrossprod = function(x)
+    fill_tcrossprod = function(x)
     {
       m = nrow(x)
       if (m != private$nrows || m != private$ncols)

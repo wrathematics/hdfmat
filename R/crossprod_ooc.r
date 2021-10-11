@@ -26,7 +26,7 @@ crossprod_ooc = function(x, file, name="crossprod")
   n = as.double(ncol(x))
   
   h = hdfmat(file, name, n, n, "double")
-  h$crossprod(x)
+  h$fill_crossprod(x)
   
   h
 }
@@ -48,7 +48,7 @@ tcrossprod_ooc = function(x, file, name="tcrossprod")
   m = as.double(nrow(x))
   
   h = hdfmat(file, name, m, m, "double")
-  h$tcrossprod(x)
+  h$fill_tcrossprod(x)
   
   h
 }

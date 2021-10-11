@@ -141,7 +141,7 @@ h
 Now we can call the `crossprod()` method and the cast will be done for us. The disadvantage here is that we have to manually size the hdfmat object correctly. Incorrectly doing so will cause an error.
 
 ```r
-h$crossprod(x)
+h$fill_crossprod(x)
 
 set.seed(1234)
 h$eigen(k=3)
