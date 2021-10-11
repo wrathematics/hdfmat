@@ -270,14 +270,13 @@ hdfmatR6 = R6::R6Class("cpumat",
 
 #' hdfmat
 #' 
-#' Constructor for cpumat objects.
+#' Constructor for hdfmat objects.
 #' 
-#' @details
-#' Data is held in an external pointer.
-#' 
-#' @param nrows,ncols The dimensions of the matrix.
+#' @param file File to store data in.
+#' @param name Dataset name on disk.
+#' @param nrows,ncols The dimension of the matrix.
 #' @param type Storage type for the matrix. Should be one of 'int', 'float', or 'double'.
-#' @return A cpumat class object.
+#' @return An hdfmat class object.
 #' 
 #' @export
 hdfmat = function(file, name, nrows, ncols, type="double")
