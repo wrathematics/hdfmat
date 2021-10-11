@@ -11,6 +11,7 @@
 #' 
 #' @return Returns an hdfmat object.
 #' 
+#' @rdname crossprod_ooc
 #' @export
 crossprod_ooc = function(x, file, name="crossprod")
 {
@@ -24,8 +25,30 @@ crossprod_ooc = function(x, file, name="crossprod")
   
   n = as.double(ncol(x))
   
-  h = hdfmat:::hdfmat(file, name, n, n, "double")
+  h = hdfmat(file, name, n, n, "double")
   h$crossprod(x)
+  
+  h
+}
+
+
+
+#' @rdname crossprod_ooc
+#' @export
+tcrossprod_ooc = function(x, file, name="tcrossprod")
+{
+  if (!is.matrix(x) && !float::is.float(x))
+    x = as.matrix(x)
+  
+  if (float::is.float(x))
+    x = x@Data
+  else if (!is.double(x))
+    storage.mode(x) = "double"
+  
+  m = as.double(nrow(x))
+  
+  h = hdfmat(file, name, m, m, "double")
+  h$tcrossprod(x)
   
   h
 }

@@ -16,6 +16,7 @@
 #' @useDynLib hdfmat R_hdfmat_scale
 #' @useDynLib hdfmat R_hdfmat_set_diag
 #' @useDynLib hdfmat R_hdfmat_svd
+#' @useDynLib hdfmat R_hdfmat_tcp
 #' 
 #' @rdname hdfmat-class
 #' @name hdfmat-class
@@ -163,6 +164,35 @@ hdfmatR6 = R6::R6Class("cpumat",
       }
       
       .Call(R_hdfmat_cp, x, private$ds, private$type)
+      invisible(self)
+    },
+    
+    
+    #' @details
+    #' Calculate the transposed crossproduct of an input matrix with result
+    #' stored in an hdfmat. Useful when the number of columns of the input is
+    #' very large.
+    #' @param x Input matrix. Fundamental type can be double, float, or int.
+    tcrossprod = function(x)
+    {
+      m = nrow(x)
+      if (m != private$nrows || m != private$ncols)
+        stop(paste0("hdfmat dimension ", private$nrows, "x", private$ncols, " different from crossprod of input ", m, "x", m))
+      
+      if (private$type == TYPE_DOUBLE)
+      {
+        if (float::is.float(x))
+          x = float::dbl(x)
+        else if (typeof(x) != "double")
+          storage.mode(x) = "double"
+      }
+      else # if (private$type == TYPE_FLOAT)
+      {
+        if (!float::is.float(x))
+          x = float::fl(x)@Data
+      }
+      
+      .Call(R_hdfmat_tcp, x, private$ds, private$type)
       invisible(self)
     },
     

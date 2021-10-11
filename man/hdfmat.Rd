@@ -7,16 +7,17 @@
 hdfmat(file, name, nrows, ncols, type = "double")
 }
 \arguments{
-\item{nrows, ncols}{The dimensions of the matrix.}
+\item{file}{File to store data in.}
+
+\item{name}{Dataset name on disk.}
+
+\item{nrows, ncols}{The dimension of the matrix.}
 
 \item{type}{Storage type for the matrix. Should be one of 'int', 'float', or 'double'.}
 }
 \value{
-A cpumat class object.
+An hdfmat class object.
 }
 \description{
-Constructor for cpumat objects.
-}
-\details{
-Data is held in an external pointer.
+Constructor for hdfmat objects.
 }

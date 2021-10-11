@@ -2,6 +2,8 @@
 
 export(crossprod_ooc)
 export(hdfmat)
+export(hdfmat_open)
+export(tcrossprod_ooc)
 import(float)
 useDynLib(hdfmat,R_hdfmat_cp)
 useDynLib(hdfmat,R_hdfmat_eigen_sym)
@@ -14,3 +16,4 @@ useDynLib(hdfmat,R_hdfmat_read)
 useDynLib(hdfmat,R_hdfmat_scale)
 useDynLib(hdfmat,R_hdfmat_set_diag)
 useDynLib(hdfmat,R_hdfmat_svd)
+useDynLib(hdfmat,R_hdfmat_tcp)

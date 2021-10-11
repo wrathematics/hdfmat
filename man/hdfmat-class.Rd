@@ -21,6 +21,7 @@ Data is held in an external pointer.
 \item \href{#method-scale}{\code{hdfmatR6$scale()}}
 \item \href{#method-set_diag}{\code{hdfmatR6$set_diag()}}
 \item \href{#method-crossprod}{\code{hdfmatR6$crossprod()}}
+\item \href{#method-tcrossprod}{\code{hdfmatR6$tcrossprod()}}
 \item \href{#method-eigen}{\code{hdfmatR6$eigen()}}
 \item \href{#method-svd}{\code{hdfmatR6$svd()}}
 \item \href{#method-clone}{\code{hdfmatR6$clone()}}
@@ -178,6 +179,28 @@ Set the diagonal of an hdfmat-stored matrix to the input scalar.
 \subsection{Details}{
 Calculate the crossproduct of an input matrix with result stored in an
 hdfmat. Useful when the number of columns of the input is very large.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-tcrossprod"></a>}}
+\if{latex}{\out{\hypertarget{method-tcrossprod}{}}}
+\subsection{Method \code{tcrossprod()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$tcrossprod(x)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{Input matrix. Fundamental type can be double, float, or int.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Calculate the transposed crossproduct of an input matrix with result
+stored in an hdfmat. Useful when the number of columns of the input is
+very large.
 }
 
 }

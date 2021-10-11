@@ -2,9 +2,12 @@
 % Please edit documentation in R/crossprod_ooc.r
 \name{crossprod_ooc}
 \alias{crossprod_ooc}
+\alias{tcrossprod_ooc}
 \title{crossprod_ooc}
 \usage{
 crossprod_ooc(x, file, name = "crossprod")
+
+tcrossprod_ooc(x, file, name = "tcrossprod")
 }
 \arguments{
 \item{x}{The input matrix. Should be in double precision.}
