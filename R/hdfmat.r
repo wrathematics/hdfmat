@@ -32,7 +32,7 @@ hdfmatR6 = R6::R6Class("cpumat",
     initialize = function(open, file, name, nrows, ncols, type)
     {
       if (isTRUE(open))
-        private$open(file=file, name=name)
+        private$inherit(file=file, name=name)
       else
         private$create(file=file, name=name, nrows=nrows, ncols=ncols, type=type)
       
@@ -220,9 +220,11 @@ hdfmatR6 = R6::R6Class("cpumat",
       
       private$open(file=file, name=name, mode=FILE_MODE_RW)
       
-      ret = .Call(R_hdfmat_init, private$fp, name, nrows, ncols, type)
+      ret = .Call(R_hdfmat_inherit, private$fp, name)
       private$ds = ret[[1]]
-      
+      private$nrows = ret[[2]][1]
+      private$ncols = ret[[2]][2]
+      private$type = ret[[3]]
     },
     
     
@@ -258,7 +260,7 @@ hdfmatR6 = R6::R6Class("cpumat",
     name = "",
     nrows = 0,
     ncols = 0,
-    type = "",
+    type = 0L,
     fp = NULL,
     ds = NULL
   )
@@ -281,4 +283,20 @@ hdfmatR6 = R6::R6Class("cpumat",
 hdfmat = function(file, name, nrows, ncols, type="double")
 {
   hdfmatR6$new(open=FALSE, file=file, name=name, nrows=nrows, ncols=ncols, type=type)
+}
+
+
+
+#' hdfmat_open
+#' 
+#' Constructor for hdfmat objects.
+#' 
+#' @param file File to store data in.
+#' @param name Dataset name on disk.
+#' @return An hdfmat class object.
+#' 
+#' @export
+hdfmat_open = function(file, name)
+{
+  hdfmatR6$new(open=TRUE, file=file, name=name)
 }
