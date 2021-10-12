@@ -10,6 +10,7 @@ extern SEXP R_hdfmat_cp(SEXP x, SEXP ds);
 extern SEXP R_hdfmat_eigen_sym(SEXP k_, SEXP n_, SEXP ds, SEXP type);
 extern SEXP R_hdfmat_fill(SEXP ds, SEXP x, SEXP row_offset_, SEXP type);
 extern SEXP R_hdfmat_fill_diag(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type);
+extern SEXP R_hdfmat_fill_linspace(SEXP m_, SEXP n_, SEXP ds, SEXP start_, SEXP stop_, SEXP type);
 extern SEXP R_hdfmat_fill_val(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type);
 extern SEXP R_hdfmat_finalize(SEXP fp, SEXP ds);
 extern SEXP R_hdfmat_inherit(SEXP fp, SEXP name);
@@ -25,6 +26,7 @@ static const R_CallMethodDef CallEntries[] = {
   {"R_hdfmat_eigen_sym", (DL_FUNC) &R_hdfmat_eigen_sym, 4},
   {"R_hdfmat_fill", (DL_FUNC) &R_hdfmat_fill, 4},
   {"R_hdfmat_fill_diag", (DL_FUNC) &R_hdfmat_fill_diag, 5},
+  {"R_hdfmat_fill_linspace", (DL_FUNC) &R_hdfmat_fill_linspace, 6},
   {"R_hdfmat_fill_val", (DL_FUNC) &R_hdfmat_fill_val, 5},
   {"R_hdfmat_finalize", (DL_FUNC) &R_hdfmat_finalize, 2},
   {"R_hdfmat_inherit", (DL_FUNC) &R_hdfmat_inherit, 2},

@@ -9,6 +9,7 @@
 #' @useDynLib hdfmat R_hdfmat_eigen_sym
 #' @useDynLib hdfmat R_hdfmat_fill
 #' @useDynLib hdfmat R_hdfmat_fill_diag
+#' @useDynLib hdfmat R_hdfmat_fill_linspace
 #' @useDynLib hdfmat R_hdfmat_fill_val
 #' @useDynLib hdfmat R_hdfmat_finalize
 #' @useDynLib hdfmat R_hdfmat_inherit
@@ -137,6 +138,24 @@ hdfmatR6 = R6::R6Class("cpumat",
     {
       v = as.double(v)
       .Call(R_hdfmat_fill_val, private$nrows, private$ncols, private$ds, v, private$type)
+      invisible(self)
+    },
+    
+    
+    #' @details
+    #' Fill the matrix (column-wise) with linearly-spaced values.
+    #' @param start,stop Beginning/end of the linear spacing.
+    fill_linspace = function(start, stop)
+    {
+      if (start == stop)
+        self$fill_val(start)
+      else
+      {
+        start = as.double(start)
+        stop = as.double(stop)
+        .Call(R_hdfmat_fill_linspace, private$nrows, private$ncols, private$ds, start, stop, private$type)
+      }
+      
       invisible(self)
     },
     
