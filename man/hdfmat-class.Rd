@@ -19,6 +19,7 @@ Data is held in an external pointer.
 \item \href{#method-fill}{\code{hdfmatR6$fill()}}
 \item \href{#method-read}{\code{hdfmatR6$read()}}
 \item \href{#method-scale}{\code{hdfmatR6$scale()}}
+\item \href{#method-fill_val}{\code{hdfmatR6$fill_val()}}
 \item \href{#method-fill_diag}{\code{hdfmatR6$fill_diag()}}
 \item \href{#method-fill_crossprod}{\code{hdfmatR6$fill_crossprod()}}
 \item \href{#method-fill_tcrossprod}{\code{hdfmatR6$fill_tcrossprod()}}
@@ -142,11 +143,11 @@ scalar.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-fill_diag"></a>}}
-\if{latex}{\out{\hypertarget{method-fill_diag}{}}}
-\subsection{Method \code{fill_diag()}}{
+\if{html}{\out{<a id="method-fill_val"></a>}}
+\if{latex}{\out{\hypertarget{method-fill_val}{}}}
+\subsection{Method \code{fill_val()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill_diag(v)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill_val(v)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -157,7 +158,28 @@ scalar.
 \if{html}{\out{</div>}}
 }
 \subsection{Details}{
-Set the diagonal of an hdfmat-stored matrix to the input scalar.
+Set every element to the given scalar value.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-fill_diag"></a>}}
+\if{latex}{\out{\hypertarget{method-fill_diag}{}}}
+\subsection{Method \code{fill_diag()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill_diag(v)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{v}}{A vector. Fundamental type can be double, float, or int.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Set the diagonal of an hdfmat-stored matrix to the input vector. Values
+will be recycled as necessary.
 }
 
 }

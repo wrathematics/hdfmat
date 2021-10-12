@@ -9,6 +9,7 @@
 #' @useDynLib hdfmat R_hdfmat_eigen_sym
 #' @useDynLib hdfmat R_hdfmat_fill
 #' @useDynLib hdfmat R_hdfmat_fill_diag
+#' @useDynLib hdfmat R_hdfmat_fill_val
 #' @useDynLib hdfmat R_hdfmat_finalize
 #' @useDynLib hdfmat R_hdfmat_inherit
 #' @useDynLib hdfmat R_hdfmat_init
@@ -130,8 +131,20 @@ hdfmatR6 = R6::R6Class("cpumat",
     
     
     #' @details
-    #' Set the diagonal of an hdfmat-stored matrix to the input scalar.
+    #' Set every element to the given scalar value.
     #' @param v Scalar. Fundamental type can be double, float, or int.
+    fill_val = function(v)
+    {
+      v = as.double(v)
+      .Call(R_hdfmat_fill_val, private$nrows, private$ncols, private$ds, v, private$type)
+      invisible(self)
+    },
+    
+    
+    #' @details
+    #' Set the diagonal of an hdfmat-stored matrix to the input vector. Values
+    #' will be recycled as necessary.
+    #' @param v A vector. Fundamental type can be double, float, or int.
     fill_diag = function(v)
     {
       v = as.double(v)
