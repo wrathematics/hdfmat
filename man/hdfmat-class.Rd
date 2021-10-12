@@ -19,7 +19,7 @@ Data is held in an external pointer.
 \item \href{#method-fill}{\code{hdfmatR6$fill()}}
 \item \href{#method-read}{\code{hdfmatR6$read()}}
 \item \href{#method-scale}{\code{hdfmatR6$scale()}}
-\item \href{#method-set_diag}{\code{hdfmatR6$set_diag()}}
+\item \href{#method-fill_diag}{\code{hdfmatR6$fill_diag()}}
 \item \href{#method-fill_crossprod}{\code{hdfmatR6$fill_crossprod()}}
 \item \href{#method-fill_tcrossprod}{\code{hdfmatR6$fill_tcrossprod()}}
 \item \href{#method-eigen}{\code{hdfmatR6$eigen()}}
@@ -142,11 +142,11 @@ scalar.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_diag"></a>}}
-\if{latex}{\out{\hypertarget{method-set_diag}{}}}
-\subsection{Method \code{set_diag()}}{
+\if{html}{\out{<a id="method-fill_diag"></a>}}
+\if{latex}{\out{\hypertarget{method-fill_diag}{}}}
+\subsection{Method \code{fill_diag()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$set_diag(v)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill_diag(v)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

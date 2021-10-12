@@ -12,8 +12,8 @@ storage.mode(x) = type
 h = hdfmat::hdfmat(f, n, nr, nc, type)
 h$fill(x)
 
-v = pi
-h$set_diag(v)
+v = c(pi, 2.0, 1.0)
+h$fill_diag(v)
 
 test = h$read()
 truth = x
