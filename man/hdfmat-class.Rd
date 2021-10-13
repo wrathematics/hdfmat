@@ -21,6 +21,7 @@ Data is held in an external pointer.
 \item \href{#method-scale}{\code{hdfmatR6$scale()}}
 \item \href{#method-fill_val}{\code{hdfmatR6$fill_val()}}
 \item \href{#method-fill_linspace}{\code{hdfmatR6$fill_linspace()}}
+\item \href{#method-fill_runif}{\code{hdfmatR6$fill_runif()}}
 \item \href{#method-fill_diag}{\code{hdfmatR6$fill_diag()}}
 \item \href{#method-fill_crossprod}{\code{hdfmatR6$fill_crossprod()}}
 \item \href{#method-fill_tcrossprod}{\code{hdfmatR6$fill_tcrossprod()}}
@@ -180,6 +181,26 @@ Set every element to the given scalar value.
 }
 \subsection{Details}{
 Fill the matrix (column-wise) with linearly-spaced values.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-fill_runif"></a>}}
+\if{latex}{\out{\hypertarget{method-fill_runif}{}}}
+\subsection{Method \code{fill_runif()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill_runif(min = 0, max = 1)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{min, max}}{Minimum/maximum values for the generator.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fill the matrix with random uniform values.
 }
 
 }

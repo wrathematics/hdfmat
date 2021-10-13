@@ -10,6 +10,7 @@
 #' @useDynLib hdfmat R_hdfmat_fill
 #' @useDynLib hdfmat R_hdfmat_fill_diag
 #' @useDynLib hdfmat R_hdfmat_fill_linspace
+#' @useDynLib hdfmat R_hdfmat_fill_runif
 #' @useDynLib hdfmat R_hdfmat_fill_val
 #' @useDynLib hdfmat R_hdfmat_finalize
 #' @useDynLib hdfmat R_hdfmat_inherit
@@ -155,6 +156,26 @@ hdfmatR6 = R6::R6Class("cpumat",
         stop = as.double(stop)
         .Call(R_hdfmat_fill_linspace, private$nrows, private$ncols, private$ds, start, stop, private$type)
       }
+      
+      invisible(self)
+    },
+    
+    
+    #' @details
+    #' Fill the matrix with random uniform values.
+    #' @param min,max Minimum/maximum values for the generator.
+    fill_runif = function(min=0, max=1)
+    {
+      if (min == max)
+        self$fill_val(min)
+      else if (min < max)
+      {
+        min = as.double(min)
+        max = as.double(max)
+        .Call(R_hdfmat_fill_runif, private$nrows, private$ncols, private$ds, min, max, private$type)
+      }
+      else
+        stop("need min <= max")
       
       invisible(self)
     },
