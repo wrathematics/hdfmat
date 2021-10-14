@@ -10,6 +10,7 @@
 #' @useDynLib hdfmat R_hdfmat_fill
 #' @useDynLib hdfmat R_hdfmat_fill_diag
 #' @useDynLib hdfmat R_hdfmat_fill_linspace
+#' @useDynLib hdfmat R_hdfmat_fill_rnorm
 #' @useDynLib hdfmat R_hdfmat_fill_runif
 #' @useDynLib hdfmat R_hdfmat_fill_val
 #' @useDynLib hdfmat R_hdfmat_finalize
@@ -176,6 +177,26 @@ hdfmatR6 = R6::R6Class("cpumat",
       }
       else
         stop("need min <= max")
+      
+      invisible(self)
+    },
+    
+    
+    #' @details
+    #' Fill the matrix with random normal values.
+    #' @param mean,sd Mean/standard deviation values for the generator.
+    fill_rnorm = function(mean=0, sd=1)
+    {
+      if (sd == 0)
+        self$fill_val(mean)
+      else if (sd > 0)
+      {
+        mean = as.double(mean)
+        sd = as.double(sd)
+        .Call(R_hdfmat_fill_rnorm, private$nrows, private$ncols, private$ds, mean, sd, private$type)
+      }
+      else
+        stop("need sd >= 0")
       
       invisible(self)
     },

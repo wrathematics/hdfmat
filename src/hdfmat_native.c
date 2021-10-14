@@ -11,6 +11,7 @@ extern SEXP R_hdfmat_eigen_sym(SEXP k_, SEXP n_, SEXP ds, SEXP type);
 extern SEXP R_hdfmat_fill(SEXP ds, SEXP x, SEXP row_offset_, SEXP type);
 extern SEXP R_hdfmat_fill_diag(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type);
 extern SEXP R_hdfmat_fill_linspace(SEXP m_, SEXP n_, SEXP ds, SEXP start_, SEXP stop_, SEXP type);
+extern SEXP R_hdfmat_fill_rnorm(SEXP m_, SEXP n_, SEXP ds, SEXP mean_, SEXP sd_, SEXP type);
 extern SEXP R_hdfmat_fill_runif(SEXP m_, SEXP n_, SEXP ds, SEXP min_, SEXP max_, SEXP type);
 extern SEXP R_hdfmat_fill_val(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type);
 extern SEXP R_hdfmat_finalize(SEXP fp, SEXP ds);

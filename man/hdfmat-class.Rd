@@ -22,6 +22,7 @@ Data is held in an external pointer.
 \item \href{#method-fill_val}{\code{hdfmatR6$fill_val()}}
 \item \href{#method-fill_linspace}{\code{hdfmatR6$fill_linspace()}}
 \item \href{#method-fill_runif}{\code{hdfmatR6$fill_runif()}}
+\item \href{#method-fill_rnorm}{\code{hdfmatR6$fill_rnorm()}}
 \item \href{#method-fill_diag}{\code{hdfmatR6$fill_diag()}}
 \item \href{#method-fill_crossprod}{\code{hdfmatR6$fill_crossprod()}}
 \item \href{#method-fill_tcrossprod}{\code{hdfmatR6$fill_tcrossprod()}}
@@ -201,6 +202,26 @@ Fill the matrix (column-wise) with linearly-spaced values.
 }
 \subsection{Details}{
 Fill the matrix with random uniform values.
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-fill_rnorm"></a>}}
+\if{latex}{\out{\hypertarget{method-fill_rnorm}{}}}
+\subsection{Method \code{fill_rnorm()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill_rnorm(mean = 0, sd = 1)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{mean, sd}}{Mean/standard deviation values for the generator.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Details}{
+Fill the matrix with random normal values.
 }
 
 }
