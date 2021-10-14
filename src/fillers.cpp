@@ -133,7 +133,7 @@ static inline void fill_runif(const T min, const T max, const hsize_t m,
     offset[0] = i;
     
     for (hsize_t j=0; j<n; j++)
-      x[j] = (T) min + (max - min)*unif_rand();
+      x[j] = (T) min + (max - min)*((T)unif_rand());
     
     data_space.selectHyperslab(H5S_SELECT_SET, slice, offset);
     dataset->write(x, h5type, mem_space, data_space);
