@@ -3,7 +3,7 @@
 #pragma once
 
 
-#define OMP_MIN_LEN 2000
+#define OMP_MIN_LEN 1000
 
 
 #endif
