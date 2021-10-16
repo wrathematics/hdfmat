@@ -13,22 +13,21 @@ Note that I/O will be the main bottleneck since this is out of core. You could d
 
 ## Installation
 
-The package depends on the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html) and links with the [float](https://cran.r-project.org/web/packages/float/index.html) and [fmlr](https://hpcran.org/packages/fmlr/index.html) packages:
+You will need a system installation of HDF5 to build the package. The package probably does not build on Windows at the moment. If you know how to set `src/Makevars.win` to link against HDF5, please let me know.
+
+The package also depends several R packages, including the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html), and links with the [float](https://cran.r-project.org/web/packages/float/index.html) and [fmlr](https://hpcran.org/packages/fmlr/index.html) packages.
+
+You can install the stable version from [the HPCRAN](https://hpcran.org) using the usual `install.packages()`:
 
 ```r
-repos = c("https://hpcran.org", "https://cran.rstudio.com")
-install.packages("R6", repos=repos)
-install.packages("float", repos=repos)
-install.packages("fmlr", repos=repos)
+install.packages("hdfmat", repos=c("https://hpcran.org", "https://cran.rstudio.com"))
 ```
 
-The development version of the package is maintained on GitHub:
+The development version of the package is maintained on GitHub.
 
 ```r
 remotes::install_github("wrathematics/hdfmat")
 ```
-
-You will need a system installation of HDF5 to build the package. The package probably does not build on Windows at the moment. If you know how to set `src/Makevars.win` to link against HDF5, please let me know.
 
 
 
