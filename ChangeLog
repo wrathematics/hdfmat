@@ -1,2 +1,6 @@
 Release 0.1-0:
-  * 
+  * Added core hdfmat class.
+  * Added basic I/O methods.
+  * Added crossprod and tcrossprod constructors.
+  * Added basic scale and filler methods.
+  * Added svd and eigen methods.
