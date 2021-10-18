@@ -33,13 +33,17 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' @param file File to store data in.
     #' @param name Dataset name on disk.
     #' @param nrows,ncols The dimension of the matrix.
-    #' @param type Storage type for the matrix. Should be one of 'int', 'float', or 'double'.
-    initialize = function(open, file, name, nrows, ncols, type)
+    #' @param type Storage type for the matrix. Should be one of 'int', 'float',
+    #' or 'double'.
+    #' @param compression The compression level, an integer from 0 (no compression)
+    #' to 9 (highest compression). Run-time performance degrades with increased
+    #' compression levels.
+    initialize = function(open, file, name, nrows, ncols, type, compression)
     {
       if (isTRUE(open))
         private$inherit(file=file, name=name)
       else
-        private$create(file=file, name=name, nrows=nrows, ncols=ncols, type=type)
+        private$create(file=file, name=name, nrows=nrows, ncols=ncols, type=type, compression=compression)
       
       invisible(self)
     },
@@ -307,6 +311,7 @@ hdfmatR6 = R6::R6Class("cpumat",
   ),
   
   
+  
   private = list(
     open = function(file, name, mode)
     {
@@ -332,17 +337,21 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
-    create = function(file, name, nrows, ncols, type)
+    create = function(file, name, nrows, ncols, type, compression)
     {
       type = match.arg(tolower(type), c("double", "float"))
       type = type_str2int(type)
+      
+      compression = as.integer(compression)
+      if (!(compression %in% 0L:9L))
+        stop("'compression' must be an integer from 0 to 9")
       
       private$nrows = as.double(nrows)
       private$ncols = as.double(ncols)
       private$type = type
       
       private$open(file=file, name=name, mode=FILE_MODE_CR)
-      private$ds = .Call(R_hdfmat_init, private$fp, name, nrows, ncols, type)
+      private$ds = .Call(R_hdfmat_init, private$fp, name, nrows, ncols, type, compression)
     },
     
     
@@ -379,13 +388,18 @@ hdfmatR6 = R6::R6Class("cpumat",
 #' @param file File to store data in.
 #' @param name Dataset name on disk.
 #' @param nrows,ncols The dimension of the matrix.
-#' @param type Storage type for the matrix. Should be one of 'int', 'float', or 'double'.
+#' @param type Storage type for the matrix. Should be one of 'int', 'float', or
+#' 'double'.
+#' @param compression The compression level, an integer from 0 (no compression)
+#' to 9 (highest compression). Run-time performance degrades with increased
+#' compression levels.
+#' 
 #' @return An hdfmat class object.
 #' 
 #' @export
-hdfmat = function(file, name, nrows, ncols, type="double")
+hdfmat = function(file, name, nrows, ncols, type="double", compression=0L)
 {
-  hdfmatR6$new(open=FALSE, file=file, name=name, nrows=nrows, ncols=ncols, type=type)
+  hdfmatR6$new(open=FALSE, file=file, name=name, nrows=nrows, ncols=ncols, type=type, compression=compression)
 }
 
 

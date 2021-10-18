@@ -36,7 +36,7 @@ Data is held in an external pointer.
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$new(open, file, name, nrows, ncols, type)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$new(open, file, name, nrows, ncols, type, compression)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -51,7 +51,12 @@ Data is held in an external pointer.
 
 \item{\code{nrows, ncols}}{The dimension of the matrix.}
 
-\item{\code{type}}{Storage type for the matrix. Should be one of 'int', 'float', or 'double'.}
+\item{\code{type}}{Storage type for the matrix. Should be one of 'int', 'float',
+or 'double'.}
+
+\item{\code{compression}}{The compression level, an integer from 0 (no compression)
+to 9 (highest compression). Run-time performance degrades with increased
+compression levels.}
 }
 \if{html}{\out{</div>}}
 }

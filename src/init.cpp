@@ -20,7 +20,7 @@ extern "C" SEXP R_hdfmat_open(SEXP filename, SEXP fm)
 
 
 
-extern "C" SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP type)
+extern "C" SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP type, SEXP compression)
 {
   SEXP ret;
   
@@ -31,17 +31,23 @@ extern "C" SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP t
   dim[0] = DBL(nrows);
   dim[1] = DBL(ncols);
   H5::DataSpace data_space(2, dim);
+  H5::DSetCreatPropList plist;
+  
+  hsize_t dim_chunk[2];
+  dim_chunk[0] = dim_chunk[1] = 20;
+  plist.setChunk(2, dim_chunk);
+  plist.setDeflate(INT(compression));
   
   H5::DataSet *dataset = new H5::DataSet;
   if (INT(type) == TYPE_DOUBLE)
   {
     H5::DataType datatype(H5::PredType::IEEE_F64LE);
-    *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space);
+    *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space, plist);
   }
   else // if (INT(type) == TYPE_FLOAT)
   {
     H5::DataType datatype(H5::PredType::IEEE_F32LE);
-    *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space);
+    *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space, plist);
   }
   
   newRptr(dataset, ret, hdf_object_finalizer<H5::DataSet>);

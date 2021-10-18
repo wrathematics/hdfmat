@@ -4,7 +4,7 @@
 \alias{hdfmat}
 \title{hdfmat}
 \usage{
-hdfmat(file, name, nrows, ncols, type = "double")
+hdfmat(file, name, nrows, ncols, type = "double", compression = 0L)
 }
 \arguments{
 \item{file}{File to store data in.}
@@ -13,7 +13,12 @@ hdfmat(file, name, nrows, ncols, type = "double")
 
 \item{nrows, ncols}{The dimension of the matrix.}
 
-\item{type}{Storage type for the matrix. Should be one of 'int', 'float', or 'double'.}
+\item{type}{Storage type for the matrix. Should be one of 'int', 'float', or
+'double'.}
+
+\item{compression}{The compression level, an integer from 0 (no compression)
+to 9 (highest compression). Run-time performance degrades with increased
+compression levels.}
 }
 \value{
 An hdfmat class object.
