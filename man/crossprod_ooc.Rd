@@ -5,9 +5,9 @@
 \alias{tcrossprod_ooc}
 \title{crossprod_ooc}
 \usage{
-crossprod_ooc(x, file, name = "crossprod")
+crossprod_ooc(x, file, name = "crossprod", compression = 0L)
 
-tcrossprod_ooc(x, file, name = "tcrossprod")
+tcrossprod_ooc(x, file, name = "tcrossprod", compression = 0L)
 }
 \arguments{
 \item{x}{The input matrix. Should be in double precision.}
@@ -15,6 +15,10 @@ tcrossprod_ooc(x, file, name = "tcrossprod")
 \item{file}{Name of the file to use for the out-of-core storage.}
 
 \item{name}{The dataset name within the HDF5 file.}
+
+\item{compression}{The compression level, an integer from 0 (no compression)
+to 9 (highest compression). Run-time performance degrades with increased
+compression levels.}
 }
 \value{
 Returns an hdfmat object.
