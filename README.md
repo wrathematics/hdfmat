@@ -15,7 +15,7 @@ Note that I/O will be the main bottleneck since this is out of core. You could d
 
 You will need a system installation of HDF5 to build the package. The package probably does not build on Windows at the moment. If you know how to set `src/Makevars.win` to link against HDF5, please let me know.
 
-The package also depends several R packages, including the light-weight [R6 package](https://cran.r-project.org/web/packages/R6/index.html), and links with the [float](https://cran.r-project.org/web/packages/float/index.html) and [fmlr](https://hpcran.org/packages/fmlr/index.html) packages.
+The package also depends several R packages, including the light-weight [R6 package](https://cran.r-project.org/package=R6), and links with the [float](https://cran.r-project.org/package=float) and [fmlr](https://hpcran.org/packages/fmlr/index.html) packages.
 
 You can install the stable version from [the HPCRAN](https://hpcran.org) using the usual `install.packages()`:
 
@@ -35,7 +35,7 @@ remotes::install_github("wrathematics/hdfmat")
 
 The main package functions operate out-of-core, that is, on data stored on disk (out of memory) in an HDF5 file. In R, this file is managed as an hdfmat object. There are a few ways of getting the data into the correct format:
 
-1. Build your dataset using other tools (e.g. [hdf5r](https://cran.r-project.org/web/packages/hdf5r/index.html)) and "inherit" it as an hdfmat with `hdfmat_open()`.
+1. Build your dataset using other tools (e.g. [hdf5r](https://cran.r-project.org/package=hdf5r)) and "inherit" it as an hdfmat with `hdfmat_open()`.
 2. Create your new dataset using the `hdfmat()` constructor, and using the `fill()` method to add blocks of rows to the file.
 3. In the specialized case of having a matrix that fits in memory whose crossproduct you need computed out-of-core, you can use `crossprod_ooc()` or `tcrossprod_ooc()`. This makes sense only in the case where you need to calculate
     * `crossprod()` when $m < n$ and $n$ is very large, or
