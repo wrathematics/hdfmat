@@ -20,6 +20,21 @@ extern "C" SEXP R_hdfmat_open(SEXP filename, SEXP fm)
 
 
 
+static inline H5::DSetCreatPropList get_plist(const hsize_t *dim, const int compression)
+{
+  const hsize_t max_contig_rows = 1;
+  
+  hsize_t dim_chunk[2];
+  dim_chunk[0] = dim[0] > max_contig_rows ? max_contig_rows : dim[0];
+  dim_chunk[1] = dim[1];
+  
+  H5::DSetCreatPropList plist;
+  plist.setChunk(2, dim_chunk);
+  plist.setDeflate(compression);
+  
+  return plist;
+}
+
 extern "C" SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP type, SEXP compression)
 {
   SEXP ret;
@@ -31,23 +46,31 @@ extern "C" SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP t
   dim[0] = DBL(nrows);
   dim[1] = DBL(ncols);
   H5::DataSpace data_space(2, dim);
-  H5::DSetCreatPropList plist;
   
-  hsize_t dim_chunk[2];
-  dim_chunk[0] = dim_chunk[1] = 20;
-  plist.setChunk(2, dim_chunk);
-  plist.setDeflate(INT(compression));
+  int cp = INT(compression);
   
   H5::DataSet *dataset = new H5::DataSet;
   if (INT(type) == TYPE_DOUBLE)
   {
     H5::DataType datatype(H5::PredType::IEEE_F64LE);
-    *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space, plist);
+    if (cp > 0)
+    {
+      auto plist = get_plist(dim, INT(compression));
+      *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space, plist);
+    }
+    else
+      *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space);
   }
   else // if (INT(type) == TYPE_FLOAT)
   {
     H5::DataType datatype(H5::PredType::IEEE_F32LE);
-    *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space, plist);
+    if (cp > 0)
+    {
+      auto plist = get_plist(dim, INT(compression));
+      *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space, plist);
+    }
+    else
+      *dataset = file->createDataSet(CHARPT(name, 0), datatype, data_space);
   }
   
   newRptr(dataset, ret, hdf_object_finalizer<H5::DataSet>);
