@@ -1,8 +1,8 @@
 Package: hdfmat
 Type: Package
-Title: HDF5 Matrix Operations
+Title: 'HDF5' Matrix Operations
 Version: 0.1-1
-Description: Some out-of-core matrix operations via HDF5.
+Description: Some out-of-core matrix operations via 'HDF5'.
 License: BSD 2-clause License + file LICENSE
 SystemRequirements:
     HDF5
