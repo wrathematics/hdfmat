@@ -21,16 +21,10 @@ crossprod_ooc = function(x, file, name="crossprod", compression=0L)
   if (!is.matrix(x) && !float::is.float(x))
     x = as.matrix(x)
   
-  if (float::is.float(x))
-  {
-    x = x@Data
+  if (is.integer(x) || float::is.float(x))
     type = "float"
-  }
-  else if (!is.double(x))
-  {
-    storage.mode(x) = "double"
+  else #if (!is.double(x))
     type = "double"
-  }
   
   n = as.double(ncol(x))
   
@@ -49,16 +43,10 @@ tcrossprod_ooc = function(x, file, name="tcrossprod", compression=0L)
   if (!is.matrix(x) && !float::is.float(x))
     x = as.matrix(x)
   
-  if (float::is.float(x))
-  {
-    x = x@Data
+  if (is.integer(x) || float::is.float(x))
     type = "float"
-  }
-  else if (!is.double(x))
-  {
-    storage.mode(x) = "double"
+  else #if (!is.double(x))
     type = "double"
-  }
   
   m = as.double(nrow(x))
   
