@@ -239,6 +239,8 @@ hdfmatR6 = R6::R6Class("cpumat",
       {
         if (!float::is.float(x))
           x = float::fl(x)@Data
+        else
+          x = x@Data
       }
       
       .Call(R_hdfmat_cp, x, private$ds, private$type)
@@ -268,6 +270,8 @@ hdfmatR6 = R6::R6Class("cpumat",
       {
         if (!float::is.float(x))
           x = float::fl(x)@Data
+        else
+          x = x@Data
       }
       
       .Call(R_hdfmat_tcp, x, private$ds, private$type)
