@@ -3828,40 +3828,46 @@ fi
           { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Unable to compile HDF5_HL test program" >&5
 $as_echo "$as_me: WARNING: Unable to compile HDF5_HL test program" >&2;}
         fi
-                { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lhdf5_hl" >&5
-$as_echo_n "checking for main in -lhdf5_hl... " >&6; }
-if ${ac_cv_lib_hdf5_hl_main+:} false; then :
+                # AC_HAVE_LIBRARY([hdf5_hl], [HDF5_LIBS="$HDF5_LIBS -lhdf5_hl"], [], [])
+        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for hdf5_hl in -lhdf5" >&5
+$as_echo_n "checking for hdf5_hl in -lhdf5... " >&6; }
+if ${ac_cv_lib_hdf5_hdf5_hl+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lhdf5_hl  $LIBS"
+LIBS="-lhdf5  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
-
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char hdf5_hl ();
 int
 main ()
 {
-return main ();
+return hdf5_hl ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_hdf5_hl_main=yes
+  ac_cv_lib_hdf5_hdf5_hl=yes
 else
-  ac_cv_lib_hdf5_hl_main=no
+  ac_cv_lib_hdf5_hdf5_hl=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_hdf5_hl_main" >&5
-$as_echo "$ac_cv_lib_hdf5_hl_main" >&6; }
-if test "x$ac_cv_lib_hdf5_hl_main" = xyes; then :
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_hdf5_hdf5_hl" >&5
+$as_echo "$ac_cv_lib_hdf5_hdf5_hl" >&6; }
+if test "x$ac_cv_lib_hdf5_hdf5_hl" = xyes; then :
   HDF5_LIBS="$HDF5_LIBS -lhdf5_hl"
 fi
-ac_cv_lib_hdf5_hl=ac_cv_lib_hdf5_hl_main
 
 
         CC=$ax_lib_hdf5_save_CC
