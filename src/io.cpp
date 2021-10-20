@@ -4,7 +4,6 @@
 
 #include "hdfmat.h"
 #include "extptr.h"
-
 #include "types.h"
 
 
@@ -29,13 +28,7 @@ static inline void write(const hsize_t m, const hsize_t n,
 
 extern "C" SEXP R_hdfmat_fill(SEXP ds, SEXP x, SEXP row_offset_, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
-  
-  // if (INT(type) == TYPE_DOUBLE)
-  //   dataset->write(REAL(x), H5::PredType::IEEE_F64LE);
-  // else // if (INT(TYPE) == TYPE_FLOAT)
-  //   dataset->write(FLOAT(x), H5::PredType::IEEE_F32LE);
   
   const hsize_t m = (hsize_t) nrows(x);
   const hsize_t n = (hsize_t) ncols(x);
@@ -43,14 +36,16 @@ extern "C" SEXP R_hdfmat_fill(SEXP ds, SEXP x, SEXP row_offset_, SEXP type)
   const hsize_t row_offset = (hsize_t) DBL(row_offset_);
   
   if (INT(type) == TYPE_DOUBLE)
-    write(m, n, row_offset, REAL(x), dataset, H5::PredType::IEEE_F64LE);
+  {
+    TRY_CATCH( write(m, n, row_offset, REAL(x), dataset, H5::PredType::IEEE_F64LE) );
+  }
   else // if (INT(type) == TYPE_FLOAT)
-    write(m, n, row_offset, FLOAT(x), dataset, H5::PredType::IEEE_F32LE);
+  {
+    TRY_CATCH( write(m, n, row_offset, FLOAT(x), dataset, H5::PredType::IEEE_F32LE) );
+  }
   
   return R_NilValue;
 }
-
-
 
 
 
@@ -77,7 +72,6 @@ extern "C" SEXP R_hdfmat_read(SEXP m_, SEXP n_, SEXP ds, SEXP type)
 {
   SEXP ret;
   
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const hsize_t m = (hsize_t) DBL(m_);
@@ -86,12 +80,12 @@ extern "C" SEXP R_hdfmat_read(SEXP m_, SEXP n_, SEXP ds, SEXP type)
   if (INT(type) == TYPE_DOUBLE)
   {
     PROTECT(ret = allocMatrix(REALSXP, n, m));
-    read(m, n, REAL(ret), dataset, H5::PredType::IEEE_F64LE);
+    TRY_CATCH( read(m, n, REAL(ret), dataset, H5::PredType::IEEE_F64LE) );
   }
   else // if (INT(type) == TYPE_FLOAT)
   {
     PROTECT(ret = allocMatrix(INTSXP, n, m));
-    read(m, n, FLOAT(ret), dataset, H5::PredType::IEEE_F32LE);
+    TRY_CATCH( read(m, n, FLOAT(ret), dataset, H5::PredType::IEEE_F32LE) );
   }
   
   UNPROTECT(1);

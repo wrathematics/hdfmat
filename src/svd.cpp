@@ -15,7 +15,6 @@ template <typename T>
 static inline void lanczos(const hsize_t m, const hsize_t n, const int k,
   T *alpha, T *beta, T *q, H5::DataSet *dataset, H5::PredType h5type)
 {
-  // H5::Exception::dontPrint();
   T *A_j = (T*) std::malloc(m * sizeof(*A_j));
   T *v = (T*) std::malloc((m+n) * sizeof(*v));
   
@@ -127,12 +126,12 @@ extern "C" SEXP R_hdfmat_svd(SEXP k_, SEXP m_, SEXP n_, SEXP ds, SEXP type)
   if (INT(type) == TYPE_DOUBLE)
   {
     PROTECT(values = allocVector(REALSXP, k));
-    svd(m, n, k, REAL(values), dataset, H5::PredType::IEEE_F64LE);
+    TRY_CATCH( svd(m, n, k, REAL(values), dataset, H5::PredType::IEEE_F64LE) );
   }
   else // if (INT(type) == TYPE_FLOAT)
   {
     PROTECT(values = allocVector(INTSXP, k));
-    svd(m, n, k, FLOAT(values), dataset, H5::PredType::IEEE_F32LE);
+    TRY_CATCH( svd(m, n, k, FLOAT(values), dataset, H5::PredType::IEEE_F32LE) );
   }
   
   UNPROTECT(1);

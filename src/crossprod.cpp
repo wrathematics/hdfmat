@@ -45,16 +45,19 @@ static inline void cp(const int m, const int n, const T *x,
 
 extern "C" SEXP R_hdfmat_cp(SEXP x, SEXP ds, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const int m = nrows(x);
   const int n = ncols(x);
   
   if (INT(type) == TYPE_DOUBLE)
-    cp(m, n, REAL(x), dataset, H5::PredType::IEEE_F64LE);
-  else // if (INT(type) == TYPE_FLOAT)
-    cp(m, n, FLOAT(x), dataset, H5::PredType::IEEE_F32LE);
+  {
+    TRY_CATCH( cp(m, n, REAL(x), dataset, H5::PredType::IEEE_F64LE) );
+  }
+    else // if (INT(type) == TYPE_FLOAT)
+  {
+    TRY_CATCH( cp(m, n, FLOAT(x), dataset, H5::PredType::IEEE_F32LE) );
+  }
   
   return R_NilValue;
 }
@@ -99,16 +102,19 @@ static inline void tcp(const int m, const int n, const T *x,
 
 extern "C" SEXP R_hdfmat_tcp(SEXP x, SEXP ds, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const int m = nrows(x);
   const int n = ncols(x);
   
   if (INT(type) == TYPE_DOUBLE)
-    tcp(m, n, REAL(x), dataset, H5::PredType::IEEE_F64LE);
-  else // if (INT(type) == TYPE_FLOAT)
-    tcp(m, n, FLOAT(x), dataset, H5::PredType::IEEE_F32LE);
+  {
+    TRY_CATCH( tcp(m, n, REAL(x), dataset, H5::PredType::IEEE_F64LE) );
+  }
+    else // if (INT(type) == TYPE_FLOAT)
+  {
+    TRY_CATCH( tcp(m, n, FLOAT(x), dataset, H5::PredType::IEEE_F32LE) );
+  }
   
   return R_NilValue;
 }

@@ -15,5 +15,7 @@
 #define INT(x) (INTEGER(x)[0])
 #define DBL(x) (REAL(x)[0])
 
+#define TRY_CATCH(expr) try { expr; } catch(const std::exception& e) { error(e.what()); }
+
 
 #endif

@@ -39,11 +39,8 @@ static inline void scale(const T val, const hsize_t m, const hsize_t n,
   std::free(x);
 }
 
-
-
 extern "C" SEXP R_hdfmat_scale(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const hsize_t m = (hsize_t) REAL(m_)[0];
@@ -51,9 +48,13 @@ extern "C" SEXP R_hdfmat_scale(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type)
   const double val = REAL(val_)[0];
   
   if (INT(type) == TYPE_DOUBLE)
-    scale(val, m, n, dataset, H5::PredType::IEEE_F64LE);
+  {
+    TRY_CATCH( scale(val, m, n, dataset, H5::PredType::IEEE_F64LE) );
+  }
   else // if (INT(type) == TYPE_FLOAT)
-    scale((float)val, m, n, dataset, H5::PredType::IEEE_F32LE);
+  {
+    TRY_CATCH( scale((float)val, m, n, dataset, H5::PredType::IEEE_F32LE) );
+  }
   
   return R_NilValue;
 }

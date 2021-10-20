@@ -39,7 +39,6 @@ static inline void fill_val(const T v, const hsize_t m, const hsize_t n,
 
 extern "C" SEXP R_hdfmat_fill_val(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const hsize_t m = (hsize_t) REAL(m_)[0];
@@ -47,9 +46,13 @@ extern "C" SEXP R_hdfmat_fill_val(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP typ
   const double v = DBL(val_);
   
   if (INT(type) == TYPE_DOUBLE)
-    fill_val(v, m, n, dataset, H5::PredType::IEEE_F64LE);
+  {
+    TRY_CATCH( fill_val(v, m, n, dataset, H5::PredType::IEEE_F64LE) );
+  }
   else // if (INT(type) == TYPE_FLOAT)
-    fill_val((float)v, m, n, dataset, H5::PredType::IEEE_F32LE);
+  {
+    TRY_CATCH( fill_val((float)v, m, n, dataset, H5::PredType::IEEE_F32LE) );
+  }
   
   return R_NilValue;
 }
@@ -91,7 +94,6 @@ static inline void fill_linspace(const T start, const T stop, const hsize_t m,
 
 extern "C" SEXP R_hdfmat_fill_linspace(SEXP m_, SEXP n_, SEXP ds, SEXP start_, SEXP stop_, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const hsize_t m = (hsize_t) REAL(m_)[0];
@@ -101,9 +103,13 @@ extern "C" SEXP R_hdfmat_fill_linspace(SEXP m_, SEXP n_, SEXP ds, SEXP start_, S
   const double stop = DBL(stop_);
   
   if (INT(type) == TYPE_DOUBLE)
-    fill_linspace(start, stop, m, n, dataset, H5::PredType::IEEE_F64LE);
-  else // if (INT(type) == TYPE_FLOAT)
-    fill_linspace((float)start, (float)stop, m, n, dataset, H5::PredType::IEEE_F32LE);
+  {
+    TRY_CATCH( fill_linspace(start, stop, m, n, dataset, H5::PredType::IEEE_F64LE) );
+  }
+    else // if (INT(type) == TYPE_FLOAT)
+  {
+    TRY_CATCH( fill_linspace((float)start, (float)stop, m, n, dataset, H5::PredType::IEEE_F32LE) );
+  }
   
   return R_NilValue;
 }
@@ -146,7 +152,6 @@ static inline void fill_runif(const T min, const T max, const hsize_t m,
 
 extern "C" SEXP R_hdfmat_fill_runif(SEXP m_, SEXP n_, SEXP ds, SEXP min_, SEXP max_, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const hsize_t m = (hsize_t) REAL(m_)[0];
@@ -156,9 +161,13 @@ extern "C" SEXP R_hdfmat_fill_runif(SEXP m_, SEXP n_, SEXP ds, SEXP min_, SEXP m
   const double max = DBL(max_);
   
   if (INT(type) == TYPE_DOUBLE)
-    fill_runif(min, max, m, n, dataset, H5::PredType::IEEE_F64LE);
-  else // if (INT(type) == TYPE_FLOAT)
-    fill_runif((float)min, (float)max, m, n, dataset, H5::PredType::IEEE_F32LE);
+  {
+    TRY_CATCH( fill_runif(min, max, m, n, dataset, H5::PredType::IEEE_F64LE) );
+  }
+    else // if (INT(type) == TYPE_FLOAT)
+  {
+    TRY_CATCH( fill_runif((float)min, (float)max, m, n, dataset, H5::PredType::IEEE_F32LE) );
+  }
   
   return R_NilValue;
 }
@@ -201,7 +210,6 @@ static inline void fill_rnorm(const T mean, const T sd, const hsize_t m,
 
 extern "C" SEXP R_hdfmat_fill_rnorm(SEXP m_, SEXP n_, SEXP ds, SEXP mean_, SEXP sd_, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const hsize_t m = (hsize_t) REAL(m_)[0];
@@ -211,9 +219,13 @@ extern "C" SEXP R_hdfmat_fill_rnorm(SEXP m_, SEXP n_, SEXP ds, SEXP mean_, SEXP 
   const double sd = DBL(sd_);
   
   if (INT(type) == TYPE_DOUBLE)
-    fill_rnorm(mean, sd, m, n, dataset, H5::PredType::IEEE_F64LE);
-  else // if (INT(type) == TYPE_FLOAT)
-    fill_rnorm((float)mean, (float)sd, m, n, dataset, H5::PredType::IEEE_F32LE);
+  {
+    TRY_CATCH( fill_rnorm(mean, sd, m, n, dataset, H5::PredType::IEEE_F64LE) );
+  }
+    else // if (INT(type) == TYPE_FLOAT)
+  {
+    TRY_CATCH( fill_rnorm((float)mean, (float)sd, m, n, dataset, H5::PredType::IEEE_F32LE) );
+  }
   
   return R_NilValue;
 }
@@ -247,7 +259,6 @@ static inline void fill_diag(const int vlen, const T *v, const hsize_t m,
 
 extern "C" SEXP R_hdfmat_fill_diag(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type)
 {
-  // H5::Exception::dontPrint();
   H5::DataSet *dataset = (H5::DataSet*) getRptr(ds);
   
   const hsize_t m = (hsize_t) REAL(m_)[0];
@@ -256,14 +267,16 @@ extern "C" SEXP R_hdfmat_fill_diag(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP ty
   const double *v = REAL(val_);
   
   if (INT(type) == TYPE_DOUBLE)
-    fill_diag(vlen, v, m, n, dataset, H5::PredType::IEEE_F64LE);
+  {
+    TRY_CATCH( fill_diag(vlen, v, m, n, dataset, H5::PredType::IEEE_F64LE) );
+  }
   else // if (INT(type) == TYPE_FLOAT)
   {
     float *v_f = (float*) std::malloc(vlen * sizeof(*v_f));
     for (int i=0; i<vlen; i++)
       v_f[i] = (float) v[i];
     
-    fill_diag(vlen, v_f, m, n, dataset, H5::PredType::IEEE_F32LE);
+    TRY_CATCH( fill_diag(vlen, v_f, m, n, dataset, H5::PredType::IEEE_F32LE) );
     std::free(v_f);
   }
   

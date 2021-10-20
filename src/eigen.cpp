@@ -15,7 +15,6 @@ template <typename T>
 static inline void lanczos(const hsize_t n, const int k,
   T *alpha, T *beta, T *q, H5::DataSet *dataset, H5::PredType h5type)
 {
-  // H5::Exception::dontPrint();
   T *A_j = (T*) std::malloc(n * sizeof(*A_j));
   T *v = (T*) std::malloc(n * sizeof(*v));
   
@@ -120,12 +119,12 @@ extern "C" SEXP R_hdfmat_eigen_sym(SEXP k_, SEXP n_, SEXP ds, SEXP type)
   if (INT(type) == TYPE_DOUBLE)
   {
     PROTECT(values = allocVector(REALSXP, k));
-    eigen_sym(n, k, REAL(values), dataset, H5::PredType::IEEE_F64LE);
+    TRY_CATCH( eigen_sym(n, k, REAL(values), dataset, H5::PredType::IEEE_F64LE) );
   }
   else // if (INT(type) == TYPE_FLOAT)
   {
     PROTECT(values = allocVector(INTSXP, k));
-    eigen_sym(n, k, FLOAT(values), dataset, H5::PredType::IEEE_F32LE);
+    TRY_CATCH( eigen_sym(n, k, FLOAT(values), dataset, H5::PredType::IEEE_F32LE) );
   }
   
   UNPROTECT(1);
