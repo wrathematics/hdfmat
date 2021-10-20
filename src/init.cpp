@@ -130,7 +130,9 @@ extern "C" SEXP R_hdfmat_inherit(SEXP fp, SEXP name)
     SET_VECTOR_ELT(ret, 0, ds);
     SET_VECTOR_ELT(ret, 1, Rdims);
     SET_VECTOR_ELT(ret, 2, type);
-  } catch(const std::exception& e) { error(e.what()); }
+  }
+  catch(const std::exception& e) { error(e.what()); }
+  catch (const H5::Exception& e) { error(e.getCDetailMsg()); }
   
   UNPROTECT(4);
   return ret;
