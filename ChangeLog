@@ -1,6 +1,8 @@
 Release 0.2-0:
   * Added support for compression.
   * Fixed some type support issues in crossprod_ooc() and tcrossprod_ooc().
+  * Added row start/stop params to reader.
+  * Added some exception handling.
 
 Release 0.1-0:
   * Added core hdfmat class.
