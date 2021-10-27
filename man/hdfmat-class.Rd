@@ -121,11 +121,20 @@ allocated for the hdfmat, and the number of columns must be equal.
 \if{latex}{\out{\hypertarget{method-read}{}}}
 \subsection{Method \code{read()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$read()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$read(row_start, row_stop)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{row_start, row_stop}}{The first/last row (1-based) to read. If
+missing, the values 1 and total number of rows will be used,
+respectively.}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Details}{
-Read an hdfmat-stored matrix into memory. Really only meant for testing.
+Read an hdfmat-stored matrix into memory.
 }
 
 }
