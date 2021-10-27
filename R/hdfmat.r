@@ -40,7 +40,7 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' compression levels.
     initialize = function(open, file, name, nrows, ncols, type, compression)
     {
-      file = normalizePath(file, winslash="/", mustWork=TRUE)
+      file = normalizePath(file, winslash="/", mustWork=FALSE)
       
       if (isTRUE(open))
         private$inherit(file=file, name=name)
