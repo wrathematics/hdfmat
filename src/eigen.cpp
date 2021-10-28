@@ -45,18 +45,18 @@ static inline void lanczos(const hsize_t n, const int k,
     if (i == 0)
     {
       // v = v - alpha[i]*q[, i]
-      #pragma omp for simd if(n > OMP_MIN_LEN)
+      #pragma omp for simd
       for (hsize_t j=0; j<n; j++)
         v[j] -= alpha[i] * q[j + n*i];
     }
     else
     {
       // v = v - beta[i-1]*q[, i-1] - alpha[i]*q[, i]
-      #pragma omp for simd if(n > OMP_MIN_LEN)
+      #pragma omp for simd
       for (hsize_t j=0; j<n; j++)
         v[j] -= beta[i-1] * q[j + n*(i-1)];
       
-      #pragma omp for simd if(n > OMP_MIN_LEN)
+      #pragma omp for simd
       for (hsize_t j=0; j<n; j++)
         v[j] -= alpha[i] * q[j + n*i];
     }
@@ -65,7 +65,7 @@ static inline void lanczos(const hsize_t n, const int k,
     
     if (i < k-1)
     {
-      #pragma omp for simd if(n > OMP_MIN_LEN)
+      #pragma omp for simd
       for (hsize_t j=0; j<n; j++)
         q[j + n*(i+1)] = v[j] / beta[i];
     }

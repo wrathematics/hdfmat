@@ -29,7 +29,7 @@ static inline void scale(const T val, const hsize_t m, const hsize_t n,
     data_space.selectHyperslab(H5S_SELECT_SET, slice, offset);
     dataset->read(x, h5type, mem_space, data_space);
     
-    #pragma omp for simd if(n > OMP_MIN_LEN)
+    #pragma omp for simd
     for (hsize_t j=0; j<n; j++)
       x[j] *= val;
     

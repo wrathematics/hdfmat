@@ -84,7 +84,7 @@ static inline void tcp(const int m, const int n, const T *x,
   
   for (int i=0; i<m; i++)
   {
-    #pragma omp for simd if(n > OMP_MIN_LEN)
+    #pragma omp for simd
     for (int j=0; j<n; j++)
       y[j] = x[i + j*m];
     

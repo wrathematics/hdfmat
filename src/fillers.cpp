@@ -12,7 +12,7 @@ static inline void fill_val(const T v, const hsize_t m, const hsize_t n,
 {
   T *x = (T*) std::malloc(n * sizeof(*x));
   
-  #pragma omp for simd if(n > OMP_MIN_LEN)
+  #pragma omp for simd
   for (hsize_t j=0; j<n; j++)
     x[j] = v;
   
@@ -81,7 +81,7 @@ static inline void fill_linspace(const T start, const T stop, const hsize_t m,
   {
     offset[0] = i;
     
-    #pragma omp for simd if(n > OMP_MIN_LEN)
+    #pragma omp for simd
     for (hsize_t j=0; j<n; j++)
       x[j] = v * ((T) i + m*j) + start;
     
