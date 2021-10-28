@@ -15,7 +15,7 @@ Note that I/O will be the main bottleneck since this is out of core. You could d
 
 You will need a system installation of HDF5 to build the package. The package probably does not build on Windows at the moment. If you know how to set `src/Makevars.win` to link against HDF5, please let me know.
 
-The package also depends several R packages, including the light-weight [R6 package](https://cran.r-project.org/package=R6), and links with the [float](https://cran.r-project.org/package=float) and [fmlr](https://hpcran.org/packages/fmlr/index.html) packages.
+The package also depends several R packages, including the light-weight [R6 package](https://cran.r-project.org/package=R6), and links with the [float](https://cran.r-project.org/package=float) and [fmlh](https://hpcran.org/packages/fmlh/index.html) packages.
 
 You can install the stable version from [the HPCRAN](https://hpcran.org) using the usual `install.packages()`:
 
