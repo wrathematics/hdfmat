@@ -1,3 +1,6 @@
+Release 0.2-1:
+  * Switch to fmlh.
+
 Release 0.2-0:
   * Added support for compression.
   * Fixed some type support issues in crossprod_ooc() and tcrossprod_ooc().
