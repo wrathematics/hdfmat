@@ -368,8 +368,11 @@ hdfmatR6 = R6::R6Class("cpumat",
       if (!(compression %in% 0L:9L))
         stop("'compression' must be an integer from 0 to 9")
       
-      private$nrows = as.double(nrows)
-      private$ncols = as.double(ncols)
+      nrows = as.double(nrows)
+      ncols = as.double(ncols)
+      
+      private$nrows = nrows
+      private$ncols = ncols
       private$type = type
       
       private$open(file=file, name=name, mode=FILE_MODE_CR)
