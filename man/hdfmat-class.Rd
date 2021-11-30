@@ -16,6 +16,7 @@ Data is held in an external pointer.
 \item \href{#method-new}{\code{hdfmatR6$new()}}
 \item \href{#method-close}{\code{hdfmatR6$close()}}
 \item \href{#method-print}{\code{hdfmatR6$print()}}
+\item \href{#method-dim}{\code{hdfmatR6$dim()}}
 \item \href{#method-fill}{\code{hdfmatR6$fill()}}
 \item \href{#method-read}{\code{hdfmatR6$read()}}
 \item \href{#method-scale}{\code{hdfmatR6$scale()}}
@@ -92,6 +93,19 @@ Print some basic info about an hdfmat object.
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-dim"></a>}}
+\if{latex}{\out{\hypertarget{method-dim}{}}}
+\subsection{Method \code{dim()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$dim()}\if{html}{\out{</div>}}
+}
+
+\subsection{Details}{
+Return the dimension.
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-fill"></a>}}
 \if{latex}{\out{\hypertarget{method-fill}{}}}
 \subsection{Method \code{fill()}}{
@@ -121,7 +135,7 @@ allocated for the hdfmat, and the number of columns must be equal.
 \if{latex}{\out{\hypertarget{method-read}{}}}
 \subsection{Method \code{read()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$read(row_start, row_stop)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$read(row_start, row_stop, col_start, col_stop)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

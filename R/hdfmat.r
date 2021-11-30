@@ -74,6 +74,16 @@ hdfmatR6 = R6::R6Class("cpumat",
     },
     
     
+    
+    #' @details
+    #' Return the dimension.
+    dim = function()
+    {
+      return(c(private$nrows, private$ncols))
+    },
+    
+    
+    
     #' @details
     #' Fill an hdfmat matrix (or part of it) with the input matrix. The number
     #' of rows of the input must be less than or equal to the number of rows
