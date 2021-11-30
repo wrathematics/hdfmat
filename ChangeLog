@@ -1,8 +1,6 @@
-Release 0.2-3:
+Release 0.2-2:
   * Fixed fill() bug with float objects.
   * Added col_start and col_stop for read() method.
-
-Release 0.2-2:
   * Fixed casting bug in object creation.
 
 Release 0.2-1:
