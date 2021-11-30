@@ -105,6 +105,7 @@ hdfmatR6 = R6::R6Class("cpumat",
       
       row_offset = floor(as.double(row_offset))
       
+      x = t(x)
       if (private$type == TYPE_DOUBLE)
       {
         if (float::is.float(x))
@@ -116,9 +117,10 @@ hdfmatR6 = R6::R6Class("cpumat",
       {
         if (!float::is.float(x))
           x = float::fl(x)@Data
+        else
+          x = x@Data
       }
       
-      x = t(x)
       dim(x) = rev(dim(x))
       .Call(R_hdfmat_fill, private$ds, x, row_offset, private$type)
       invisible(self)
