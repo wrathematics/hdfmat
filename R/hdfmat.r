@@ -120,22 +120,33 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' @param row_start,row_stop The first/last row (1-based) to read. If
     #' missing, the values 1 and total number of rows will be used,
     #' respectively.
-    read = function(row_start, row_stop)
+    read = function(row_start, row_stop, col_start, col_stop)
     {
       if (missing(row_start))
         row_start = 1
       if (missing(row_stop))
         row_stop = private$nrows
+      if (missing(col_start))
+        col_start = 1
+      if (missing(col_stop))
+        col_stop = private$ncols
       
       if (!is.numeric(row_start) || !is.numeric(row_stop) || length(row_start) != 1 || length(row_stop) != 1)
         stop("'row_start' and 'row_stop' must be single numbers")
+      if (!is.numeric(col_start) || !is.numeric(col_stop) || length(col_start) != 1 || length(col_stop) != 1)
+        stop("'col_start' and 'col_stop' must be single numbers")
+      
       if (row_stop < row_start || row_start < 1 || row_stop < 1 || row_start > private$nrows)
         stop("must have 1 <= row_start <= row_stop <= nrows")
+      if (col_stop < col_start || col_start < 1 || col_stop < 1 || col_start > private$ncols)
+        stop("must have 1 <= col_start <= col_stop <= ncols")
       
       row_start = as.double(row_start) - 1.0
       row_stop = as.double(row_stop) - 1.0
+      col_start = as.double(col_start) - 1.0
+      col_stop = as.double(col_stop) - 1.0
       
-      ret = .Call(R_hdfmat_read, row_start, row_stop, private$nrows, private$ncols, private$ds, private$type)
+      ret = .Call(R_hdfmat_read, row_start, row_stop, col_start, col_stop, private$nrows, private$ncols, private$ds, private$type)
       if (private$type == TYPE_FLOAT)
         ret = float::float32(ret)
       
