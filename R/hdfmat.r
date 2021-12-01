@@ -96,7 +96,7 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' set to \code{TRUE}, and only if you know what you're doing.
     fill = function(x, row_offset=0, asis=FALSE)
     {
-      if (!is.matrix(x) && !is.float(x))
+      if (!is.matrix(x) && !float::is.float(x))
         x = as.matrix(x)
       
       if (!is.numeric(row_offset) || is.na(row_offset) || length(row_offset) != 1 || row_offset < 0)
