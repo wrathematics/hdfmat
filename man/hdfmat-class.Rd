@@ -110,7 +110,7 @@ Return the dimension.
 \if{latex}{\out{\hypertarget{method-fill}{}}}
 \subsection{Method \code{fill()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill(x, row_offset = 0)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$fill(x, row_offset = 0, asis = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -119,7 +119,10 @@ Return the dimension.
 \item{\code{x}}{The input matrix. Must be double or float.}
 
 \item{\code{row_offset}}{The number of rows to skip. Useful when building the
-hdfmat in chunks.}
+hdfmat in chunks.
+#' @param asis Should the data be read "as is", i.e. without transposing
+in order to take from row-major HDF5 to column-major R? Should rarely be
+set to \code{TRUE}, and only if you know what you're doing.}
 }
 \if{html}{\out{</div>}}
 }
@@ -135,7 +138,7 @@ allocated for the hdfmat, and the number of columns must be equal.
 \if{latex}{\out{\hypertarget{method-read}{}}}
 \subsection{Method \code{read()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$read(row_start, row_stop, col_start, col_stop)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{hdfmatR6$read(row_start, row_stop, col_start, col_stop, asis = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -144,6 +147,10 @@ allocated for the hdfmat, and the number of columns must be equal.
 \item{\code{row_start, row_stop}}{The first/last row (1-based) to read. If
 missing, the values 1 and total number of rows will be used,
 respectively.}
+
+\item{\code{asis}}{Should the data be read "as is", i.e. without transposing
+in order to take from row-major HDF5 to column-major R? Should rarely be
+set to \code{TRUE}, and only if you know what you're doing.}
 }
 \if{html}{\out{</div>}}
 }

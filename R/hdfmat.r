@@ -91,7 +91,10 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' @param x The input matrix. Must be double or float.
     #' @param row_offset The number of rows to skip. Useful when building the
     #' hdfmat in chunks.
-    fill = function(x, row_offset=0)
+    #' #' @param asis Should the data be read "as is", i.e. without transposing
+    #' in order to take from row-major HDF5 to column-major R? Should rarely be
+    #' set to \code{TRUE}, and only if you know what you're doing.
+    fill = function(x, row_offset=0, asis=FALSE)
     {
       if (!is.matrix(x) && !is.float(x))
         x = as.matrix(x)
@@ -105,7 +108,11 @@ hdfmatR6 = R6::R6Class("cpumat",
       
       row_offset = floor(as.double(row_offset))
       
-      x = t(x)
+      if (!asis)
+        x = t(x)
+      else
+        dim(x) = rev(dim(x))
+      
       if (private$type == TYPE_DOUBLE)
       {
         if (float::is.float(x))
@@ -132,7 +139,10 @@ hdfmatR6 = R6::R6Class("cpumat",
     #' @param row_start,row_stop The first/last row (1-based) to read. If
     #' missing, the values 1 and total number of rows will be used,
     #' respectively.
-    read = function(row_start, row_stop, col_start, col_stop)
+    #' @param asis Should the data be read "as is", i.e. without transposing
+    #' in order to take from row-major HDF5 to column-major R? Should rarely be
+    #' set to \code{TRUE}, and only if you know what you're doing.
+    read = function(row_start, row_stop, col_start, col_stop, asis=FALSE)
     {
       if (missing(row_start))
         row_start = 1
@@ -158,11 +168,14 @@ hdfmatR6 = R6::R6Class("cpumat",
       col_start = as.double(col_start) - 1.0
       col_stop = as.double(col_stop) - 1.0
       
-      ret = .Call(R_hdfmat_read, row_start, row_stop, col_start, col_stop, private$nrows, private$ncols, private$ds, private$type)
+      ret = .Call(R_hdfmat_read, row_start, row_stop, col_start, col_stop, private$ds, private$type, asis)
       if (private$type == TYPE_FLOAT)
         ret = float::float32(ret)
       
-      t(ret)
+      if (!asis)
+        t(ret)
+      else
+        ret
     },
     
     

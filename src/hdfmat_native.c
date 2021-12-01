@@ -18,7 +18,7 @@ extern SEXP R_hdfmat_finalize(SEXP fp, SEXP ds);
 extern SEXP R_hdfmat_inherit(SEXP fp, SEXP name);
 extern SEXP R_hdfmat_init(SEXP fp, SEXP name, SEXP nrows, SEXP ncols, SEXP type, SEXP compression);
 extern SEXP R_hdfmat_open(SEXP filename, SEXP mode);
-extern SEXP R_hdfmat_read(SEXP row_start_, SEXP row_stop_, SEXP col_start_, SEXP col_stop_, SEXP m_, SEXP n_, SEXP ds, SEXP type);
+extern SEXP R_hdfmat_read(SEXP row_start_, SEXP row_stop_, SEXP col_start_, SEXP col_stop_, SEXP ds, SEXP type, SEXP asis);
 extern SEXP R_hdfmat_scale(SEXP m_, SEXP n_, SEXP ds, SEXP val_, SEXP type);
 extern SEXP R_hdfmat_svd(SEXP k_, SEXP m_, SEXP n_, SEXP ds, SEXP type);
 extern SEXP R_hdfmat_tcp(SEXP x, SEXP ds);
@@ -34,7 +34,7 @@ static const R_CallMethodDef CallEntries[] = {
   {"R_hdfmat_finalize", (DL_FUNC) &R_hdfmat_finalize, 2},
   {"R_hdfmat_inherit", (DL_FUNC) &R_hdfmat_inherit, 2},
   {"R_hdfmat_init", (DL_FUNC) &R_hdfmat_init, 6},
-  {"R_hdfmat_read", (DL_FUNC) &R_hdfmat_read, 8},
+  {"R_hdfmat_read", (DL_FUNC) &R_hdfmat_read, 7},
   {"R_hdfmat_open", (DL_FUNC) &R_hdfmat_open, 2},
   {"R_hdfmat_scale", (DL_FUNC) &R_hdfmat_scale, 5},
   {"R_hdfmat_svd", (DL_FUNC) &R_hdfmat_svd, 5},
