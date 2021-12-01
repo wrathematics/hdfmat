@@ -2,6 +2,7 @@ Release 0.2-2:
   * Fixed fill() bug with float objects.
   * Added col_start and col_stop for read() method.
   * Fixed casting bug in object creation.
+  * Added 'asis' option for read() and fill() methods.
 
 Release 0.2-1:
   * Switch to fmlh.
