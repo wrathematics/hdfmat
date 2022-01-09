@@ -1,6 +1,6 @@
 # hdfmat
 
-* **Version:** 0.2-2
+* **Version:** 0.2-3
 * **License:** [BSD 2-Clause](https://opensource.org/licenses/BSD-2-Clause)
 * **Author:** Drew Schmidt
 

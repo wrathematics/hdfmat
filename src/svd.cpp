@@ -3,8 +3,7 @@
 
 #include <fml/src/fml/cpu/cpumat.hh>
 #include <fml/src/fml/cpu/cpuvec.hh>
-#include <fml/src/fml/cpu/linalg/blas.hh>
-#include <fml/src/fml/cpu/linalg/linalg_eigen.hh>
+#include <fml/src/fml/cpu/linalg/eigen.hh>
 
 #include "hdfmat.h"
 #include "extptr.h"

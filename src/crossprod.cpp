@@ -3,7 +3,7 @@
 
 #include <float/float32.h>
 
-#include <fml/src/fml/cpu/linalg/blas.hh>
+#include <fml/src/fml/cpu/linalg/crossprod.hh>
 
 #include "hdfmat.h"
 #include "extptr.h"
